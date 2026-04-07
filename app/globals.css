@@ -54,6 +54,15 @@
   .text-balance {
     text-wrap: balance;
   }
+
+  /* Hide scrollbar on any element */
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
   
   .editorial-rule {
     border-top: 1px solid var(--color-ink);

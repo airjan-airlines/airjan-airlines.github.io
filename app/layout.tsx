@@ -43,7 +43,7 @@ export default function RootLayout({
         <MagazineHeader />
 
         {/* Main Content Area — scrolls inside the red border */}
-        <div className="fixed inset-[10px] md:inset-[20px] z-10 overflow-y-auto px-6 md:px-12 py-32 md:py-40">
+        <div className="fixed inset-[10px] md:inset-[20px] z-10 overflow-y-auto no-scrollbar px-6 md:px-12 py-32 md:py-40">
           {children}
         </div>
       </body>
