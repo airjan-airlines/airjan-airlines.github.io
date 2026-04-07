@@ -3,6 +3,10 @@ import PageTransition from "@/components/PageTransition";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 
+export function generateStaticParams() {
+  return technicalProjects.map((p: Project) => ({ slug: p.slug }));
+}
+
 export default async function WorkDetail({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params;
   const project = technicalProjects.find((p: Project) => p.slug === resolvedParams.slug);
