@@ -1,0 +1,106 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --color-base: #F5F0EB;
+  --color-base-dark: #111111;
+  --color-time-red: #E31837;
+  --color-ink: #1C1C1C;
+  --color-ink-light: #4A4A4A;
+
+  --font-display: "Bodoni Moda", serif;
+  --font-body: "PT Serif", serif;
+  --font-sans: "Jost", sans-serif;
+}
+
+/* Base Editorial Styles */
+@layer base {
+  :root {
+    background-color: var(--color-base);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Hide scrollbar across all browsers */
+  html {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+  }
+  html::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+  }
+
+  /* Headings get the high-contrast display serif */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--color-ink);
+  }
+
+  /* General selections in red to match the aesthetic */
+  ::selection {
+    background-color: var(--color-time-red);
+    color: #ffffff;
+  }
+}
+
+/* Custom Utilities for Editorial Layout */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .editorial-rule {
+    border-top: 1px solid var(--color-ink);
+    width: 100%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .editorial-rule-thin {
+    border-top: 1px solid rgba(28, 28, 28, 0.2);
+    width: 100%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .editorial-rule-red {
+    border-top: 2px solid var(--color-time-red);
+    width: 100%;
+  }
+
+  .drop-cap::first-letter {
+    font-family: var(--font-display);
+    font-size: 4.5rem;
+    line-height: 0.8;
+    float: left;
+    margin-top: 0.2rem;
+    margin-right: 0.5rem;
+    color: var(--color-ink);
+  }
+
+  .small-caps {
+    font-variant-caps: all-small-caps;
+    letter-spacing: 0.05em;
+  }
+
+  /* Grain texture overlay class */
+  .bg-grain {
+    position: relative;
+  }
+  .bg-grain::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 50;
+    opacity: 0.4;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+  }
+}
