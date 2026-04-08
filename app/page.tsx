@@ -96,9 +96,28 @@ export default function Home() {
             </p>
 
             <h3 className="small-caps text-sm mb-2 text-time-red font-bold">Open To</h3>
-            <p className="text-sm text-ink-light font-body">
+            <p className="text-sm text-ink-light font-body mb-6">
               Interested in co-founder opportunities and internships or research positions across MLE, DS, and AI engineering.
             </p>
+
+            <h3 className="small-caps text-sm mb-2 text-time-red font-bold">Contact</h3>
+            <ul className="space-y-1">
+              <li>
+                <a href="mailto:arjundesikan2008@gmail.com" className="text-sm font-sans hover:text-time-red transition-colors">
+                  Email ↗
+                </a>
+              </li>
+              <li>
+                <a href="https://www.linkedin.com/in/arjun-desikan-320b76304/" target="_blank" rel="noreferrer" className="text-sm font-sans hover:text-time-red transition-colors">
+                  LinkedIn ↗
+                </a>
+              </li>
+              <li>
+                <a href="https://www.instagram.com/arjun_desikan" target="_blank" rel="noreferrer" className="text-sm font-sans hover:text-time-red transition-colors">
+                  Instagram ↗
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
       </motion.div>
