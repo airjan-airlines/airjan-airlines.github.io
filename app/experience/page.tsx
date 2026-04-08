@@ -6,13 +6,13 @@ export default function ProfessionalExperience() {
     <PageTransition>
       <div className="mb-12">
         <h1 className="text-6xl md:text-8xl font-display mb-4">Professional Experience</h1>
-        <p className="font-sans small-caps border-b border-ink/20 pb-4">Data Science, Analytics, and Software Engineering</p>
+        <p className="font-sans small-caps border-b border-ink/20 pb-4">Data Science, Research, and AI Engineering</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16">
         <div className="md:col-span-8 md:col-start-3 relative">
           <div className="editorial-rule-thin mb-8"></div>
-          
+
           <div className="space-y-16 mt-16">
             {technicalExperience.map((exp: Experience, i: number) => (
               <div key={i} className="relative group">

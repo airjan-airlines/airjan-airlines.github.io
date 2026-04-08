@@ -1,10 +1,14 @@
-# Dreams or Delusions
+---
+title: "Dreams or Delusions"
+date: "Spring 2025"
+excerpt: "An exploration asking whether naive dreaming serves us better than uncomfortable truth."
+---
 
 *Written as part of the 2025 UIL Invitational A (Ready Writing). Completed in 2 hours.*
 
 Throughout western philosophical thought, emphasis has always been placed on the seemingly sanctimonious idea of truth: from Plato’s original justified true belief theory to Wittgenstein's characterization of philosophy to “show the fly the way out of the fly bottle,” the quixotic goal of achieving superior understanding has oft been left unrealized. In essence, though theoretical truths have been proposed by every self-proclaimed philosopher or sage, oftentimes living by those same maxims is simply unrealistic in a pragmatic sense, thus forcing the moral to abandon naive notions of perfection for realistic progress.
 
-Consider prolific American author John Steinbeck’s analysis of self-deception through his work *Of Mice and Men*. Forged in the heart of the oppressive Dust Bowl, the work conveys the desperation of fictional characters Candy and Lennie as they delude themselves with ultimately unachievable dreams of property and happiness, slaving away on the selfish Curly’s ranch. Though the disabled dreamers’ wide-eyed fantasies are never achieved, their self-deception enables their continuous struggle in the face of endless poverty. 
+Consider prolific American author John Steinbeck’s analysis of self-deception through his work *Of Mice and Men*. Forged in the heart of the oppressive Dust Bowl, the work conveys the desperation of fictional characters George and Lennie as they delude themselves with ultimately unachievable dreams of property and happiness, slaving away on the selfish Curly’s ranch. Though the disabled dreamers’ wide-eyed fantasies are never achieved, their self-deception enables their continuous struggle in the face of endless poverty. 
 
 The use of dreams as a coping mechanism, whether due to boredom or societal oppression, Steinbeck suggests, is actually beneficial to the discouraged: although deception may seem inherently immoral and lacking confidence, dreams can serve as an escape from the chores of daily life — a life which otherwise may seem unbearably pointless. Ironically, through this assertion Steinbeck himself settles for a pragmatic approach rather than inner moral truth; the contemplative author encourages belying oneself rather than achieving total morality through condemnation.
 
@@ -38,6 +42,6 @@ Or do I?
 
 Is it possible to find a compatibilist approach to delusion and reality? Should I continue to naively dream in hopes of eventual perfection? Or will doing so strip life of its basic canon: love, strife, anger, fear, success?
 
-Ultimately, life is about the journey, not the destination, so maybe it is best to relax and let myself enjoy the progress, right?
+Ultimately, life is about the journey, not the destination, so maybe it is best to relax and let myself enjoy the process, right?
 
 *Or at least that’s what I’ll tell myself.*

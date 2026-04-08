@@ -77,6 +77,16 @@ export const technicalExperience: Experience[] = [
       "Analyzed 25,000+ mortality records in R to produce statistical report draft for county leadership on leading causes of death in 2021.",
       "Built full data analysis pipeline (SQL + R) featuring age-adjusted mortality rates, T, Chi-Square, and K-S significance testing, and ggplot2 graphs"
     ]
+  },
+  {
+    organization: "Harvard OpenBio Student Research Institute",
+    role: "Student Bioinformatics Researcher (First-Author)",
+    duration: "Summer 2025",
+    description: [
+      "Lead bioinformatics research project regarding pancancer tumor mutation effects on gene expression and gene expression dimensionality under PHD student Mentor.",
+      "Applied unsupervised learning techniques (Principal Component Analysis, Partial Least Squares Regression) to mRNA-sequencing data from The Cancer Genome Atlas (3527 Tumors).",
+      "First-authored 30 Page research paper on project results; abstract is to be published in Harvard Affiliated Issue of STEM Fellowship Journal"
+    ]
   }
 ];
 

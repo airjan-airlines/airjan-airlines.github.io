@@ -60,7 +60,7 @@ export default function Home() {
               <Link href="/experience" className="group block">
                 <h4 className="text-2xl mb-2 group-hover:-translate-y-1 transition-transform duration-300">Professional Experience</h4>
                 <p className="text-sm border-l-2 border-time-red pl-4 text-ink-light">
-                  Data science, analytics, and software engineering roles.
+                  Data science, research, and AI engineering roles.
                 </p>
               </Link>
               <Link href="/nontechnical" className="group block">
@@ -84,9 +84,8 @@ export default function Home() {
               <li><Link href="/technical" className="hover:text-time-red transition-colors text-lg">I. Technical Work</Link></li>
               <li><Link href="/experience" className="hover:text-time-red transition-colors text-lg">II. Professional Experience</Link></li>
               <li><Link href="/nontechnical" className="hover:text-time-red transition-colors text-lg">III. Leadership</Link></li>
-              <li><Link href="/research" className="hover:text-time-red transition-colors text-lg">IV. Research & Abstract</Link></li>
-              <li><Link href="/blog" className="hover:text-time-red transition-colors text-lg">V. Essays & Blog</Link></li>
-              <li><Link href="/interests" className="hover:text-time-red transition-colors text-lg">VI. Personal Interests</Link></li>
+              <li><Link href="/blog" className="hover:text-time-red transition-colors text-lg">IV. Essays & Blog</Link></li>
+              <li><Link href="/interests" className="hover:text-time-red transition-colors text-lg">V. Personal Interests</Link></li>
             </ul>
 
             <div className="editorial-rule-thin"></div>
