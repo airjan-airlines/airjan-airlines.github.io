@@ -48,7 +48,8 @@ export const technicalProjects: Project[] = [
     category: "Technical",
     duration: "Nov. 2025 - Present",
     bullets: [
-      "Solo Developer; Built React Native app delivering text-based skateboarding coaching via RAG on web-scraped wiki knowledge base.",
+      "Solo Developer",
+      "Built React Native app delivering text-based skateboarding coaching via RAG on web-scraped wiki knowledge base.",
       "Prototyping video analysis system using Google MediaPipe pose landmarker, OpenCV, and VLMs to compare user trick footage to professional references.",
       "Built trick graph visualization and tracking, allowing for simplified user trick-relationship understanding.",
     ],
@@ -61,6 +62,7 @@ export const technicalProjects: Project[] = [
     category: "Technical",
     duration: "Jun. 2025 - Nov. 2025",
     bullets: [
+      "Project Lead, Backend Developer",
       "Led team of 3 to build AI-powered research onboarding tool indexing 1M+ academic papers (PostgreSQL), enabling users to generate mastery pathways via natural language prompts.",
       "Designed content-based recommendation engine using Sci-BERT embeddings, LLM query expansion, pgvector similarity search, and Kneedle algorithm."
     ]
@@ -80,7 +82,7 @@ export const technicalExperience: Experience[] = [
   },
   {
     organization: "Harvard OpenBio Student Research Institute",
-    role: "Student Bioinformatics Researcher (First-Author)",
+    role: "Bioinformatics Researcher (First-Author)",
     duration: "Summer 2025",
     description: [
       "Lead bioinformatics research project regarding pancancer tumor mutation effects on gene expression and gene expression dimensionality under PHD student Mentor.",

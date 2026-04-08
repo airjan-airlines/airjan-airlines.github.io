@@ -97,7 +97,7 @@ export default function Home() {
 
             <h3 className="small-caps text-sm mb-2 text-time-red font-bold">Open To</h3>
             <p className="text-sm text-ink-light font-body">
-              Interested in co-founder opportunities and internships across MLE, DS, and AI engineering.
+              Interested in co-founder opportunities and internships or research positions across MLE, DS, and AI engineering.
             </p>
           </div>
         </div>
