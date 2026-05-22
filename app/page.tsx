@@ -92,12 +92,12 @@ export default function Home() {
 
             <h3 className="small-caps text-sm mb-2 text-time-red font-bold">Status: Now</h3>
             <p className="text-sm text-ink-light font-body italic mb-6">
-              Prototyping skateboarding video analysis pipeline and wrapping up AP exams.
+              Starting work on single-cell disease co-embeddings at MIT CSAIL
             </p>
 
             <h3 className="small-caps text-sm mb-2 text-time-red font-bold">Open To</h3>
             <p className="text-sm text-ink-light font-body mb-6">
-              Interested in co-founder opportunities and internships or research positions across MLE, DS, and AI engineering.
+              Interested in co-founder opportunities and internships or research positions across ML, DS, and AI engineering.
             </p>
 
             <h3 className="small-caps text-sm mb-2 text-time-red font-bold">Contact</h3>
