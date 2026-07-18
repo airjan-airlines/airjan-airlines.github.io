@@ -20,16 +20,32 @@ export function SectionOpener({
   deck: string;
 }) {
   return (
-    <header className="mb-16 md:mb-24">
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-y-4 gap-x-8 items-end">
-        <div className="md:col-span-8">
-          <h1 className="text-5xl">{title}</h1>
-        </div>
-        <p className="md:col-span-4 font-body italic text-lg text-ink-light measure-tight md:pb-2">
+    /*
+     * A feature opening spread. Section titles are single words, which is the
+     * one case where the display scale can run all the way up without the
+     * headline wrapping to three lines.
+     *
+     * The deck sits below the rule in an offset column rather than beside the
+     * title. Parked in the top right of a section header it reads as a floating
+     * corner paragraph aligned to nothing; below the rule it belongs to a grid.
+     */
+    <header className="mb-20 md:mb-32">
+      {/*
+        Sized in vw rather than from the shared --text-6xl ramp. That ramp has a
+        3.8rem floor for the home masthead, which wraps happily; a single-word
+        section title cannot wrap, so at 390px "Engineering" ran 368px into
+        342px of space and pushed the page sideways. 11vw keeps the longest
+        title inside the measure at every width.
+      */}
+      <h1 className="text-[clamp(2.5rem,11vw,9rem)] leading-[0.82] -ml-[0.06em]">
+        {title}
+      </h1>
+      <div className="rule mt-8 md:mt-10" />
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-x-10">
+        <p className="md:col-span-5 md:col-start-8 font-body italic text-lg text-ink-light mt-5">
           {deck}
         </p>
       </div>
-      <div className="rule mt-8" />
     </header>
   );
 }

@@ -43,7 +43,7 @@ export default function Interests() {
 
       {/* Skills as an editorial index, not bars or badges. */}
       <section className="mt-32 pt-10 border-t-2 border-accent">
-        <h2 className="label mb-10">Index of tools</h2>
+        <h2 className="text-2xl mb-10">Index of tools</h2>
         <dl className="grid grid-cols-1 md:grid-cols-12 gap-y-8 gap-x-10">
           {Object.entries(skills).map(([category, items]) => (
             <div key={category} className="md:col-span-4">

@@ -32,7 +32,7 @@ export default function Engineering() {
           organisation with its own stakes. */}
       <Reveal>
         <section className="mb-28 md:mb-36">
-          <h2 className="label mb-10">Industry</h2>
+          <h2 className="text-2xl mb-10">Industry</h2>
           <article id={internship.slug} className="scroll-mt-32">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-y-6 gap-x-10">
               <div className="md:col-span-3">
@@ -65,7 +65,7 @@ export default function Engineering() {
       </Reveal>
 
       <div className="border-t-2 border-accent pt-10">
-        <h2 className="label mb-14">Projects</h2>
+        <h2 className="text-2xl mb-14">Projects</h2>
 
         <div className="space-y-24 md:space-y-32">
           {sorted.map((project, i) => (
@@ -73,7 +73,7 @@ export default function Engineering() {
               <article id={project.slug} className="scroll-mt-32 group">
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-y-6 gap-x-10">
                   <div className="md:col-span-3">
-                    <span className="folio text-5xl block mb-6">
+                    <span className="folio block mb-6">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <p className="label text-ink">{project.duration}</p>

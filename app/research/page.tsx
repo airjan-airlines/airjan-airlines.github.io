@@ -33,7 +33,7 @@ export default function Research() {
               <div className="grid grid-cols-1 md:grid-cols-12 gap-y-6 gap-x-10">
                 {/* Rail: numeral + metadata */}
                 <div className="md:col-span-3">
-                  <span className="folio text-5xl block mb-6">
+                  <span className="folio block mb-6">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <p className="label text-ink">{item.duration}</p>

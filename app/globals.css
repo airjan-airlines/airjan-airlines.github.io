@@ -173,11 +173,13 @@
     color: var(--color-ink-light);
   }
 
-  /* Large display numerals that anchor editorial entries. */
+  /* Large display numerals that anchor editorial entries. Sized to fill the
+     left rail without overrunning it at 2 digits. */
   .folio {
     font-family: var(--font-display);
     font-variant-numeric: tabular-nums;
-    line-height: 1;
+    font-size: clamp(3.25rem, 5vw, 5.5rem);
+    line-height: 0.85;
     color: var(--color-ink);
     opacity: 0.14;
     transition: opacity var(--dur-base) var(--ease-out-editorial),
