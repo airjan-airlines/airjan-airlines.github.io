@@ -65,7 +65,7 @@ export default function Home() {
           {/* --- Lead feature ------------------------------------------ */}
           <div className="lg:col-span-7 xl:col-span-8">
             <h2 className="text-3xl measure mb-8">{thesis}</h2>
-            <p className="font-body text-lg leading-relaxed measure drop-cap">
+            <p className="font-body text-lg leading-relaxed measure">
               {standfirst}
             </p>
 
@@ -142,18 +142,18 @@ export default function Home() {
               <section>
                 <h3 className="label text-accent mb-2">Now</h3>
                 <p className="font-body text-base italic text-ink-light measure-tight">
-                  Self-supervised temporal representation learning for financial
-                  markets at MIT CSAIL, and formal verification of
-                  model-generated specs with Apart Research.
+                  Stock embeddings at MIT CSAIL, tactile feedback models at
+                  Johns Hopkins, and agent swarm intelligence inside the CSAIL
+                  lab platform.
                 </p>
               </section>
 
               <section>
                 <h3 className="label mb-2">Open to</h3>
                 <p className="font-body text-base text-ink-light measure-tight">
-                  Research positions and internships in machine learning,
-                  broadly. I care more about whether the problem is hard than
-                  about which field it belongs to.
+                  Research positions and internships in ML. I&apos;m still
+                  figuring out what to specialize in, so I&apos;m open to a
+                  fairly wide range.
                 </p>
               </section>
 

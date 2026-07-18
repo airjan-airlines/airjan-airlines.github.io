@@ -57,7 +57,7 @@ export interface ArchiveEntry {
 export const profile = {
   name: "Arjun Desikan",
   school: "University of California, Berkeley",
-  degree: "B.A. Data Science",
+  degree: "B.A. Data Science and Computer Science",
   gpa: "4.0/4.0",
   gradYear: "2028",
   location: "Berkeley, CA",
@@ -68,13 +68,13 @@ export const profile = {
   issueName: "The Research Issue",
 };
 
-/** DRAFTED. Review. */
+/** Adapted from Arjun's own LinkedIn bio. His voice, trimmed. */
 export const thesis =
-  "Right now I'm working on quantitative finance at MIT, tactile signal prediction at Johns Hopkins, and formal verification of model-generated code. These are not the same field.";
+  "Hi there, I'm Arjun. I'm a Berkeley data science and CS double major, in love with representation learning and time series methods.";
 
-/** DRAFTED. Review. */
+/** Adapted from Arjun's own LinkedIn bio. His voice, trimmed. */
 export const standfirst =
-  "I get asked what my focus is. The honest answer is that I don't have one yet. The problems that interest me haven't converged on a single field, and I'd rather work on several things I find genuinely hard than pick a lane early for the sake of a tidy story.";
+  "Right now I'm developing stock embeddings at MIT CSAIL and tactile feedback models at Johns Hopkins. I'm still experimenting with different niches and figuring out what to specialize in. Lately AI safety has sparked my interest, which is what pulled me into the MIT AI Safety Fundamentals Fellowship and Apart Research's Secure Program Synthesis Fellowship.";
 
 /** Cover lines. Each maps to a verifiable resume fact. */
 export const statsHighlights = [
@@ -199,7 +199,8 @@ export const projects: Project[] = [
       "Engineered NLP question ingestion and topic clustering pipeline and epsilon-greedy softmax-based question recommendation system, tailoring question topics to user weaknesses.",
       "Prototyped RL-based recommendation approach using DQN and student-answering simulation across reward structures to benchmark against production softmax system.",
     ],
-    pullQuote: "The whole app is one idea: ask about what you keep missing.",
+    pullQuote:
+      "I built the recommendation system, recruited the team, and filmed a few excruciatingly embarrassing outreach videos.",
     stats: [
       { value: "4", label: "Developers led" },
       { value: "500", label: "Downloads" },

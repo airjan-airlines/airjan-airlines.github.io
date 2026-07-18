@@ -15,8 +15,8 @@ came from your resume; all of it is inference from your resume plus your essays.
 
 | Field | Where it shows | Risk |
 |---|---|---|
-| `thesis` | Home, lead headline | Rewritten per your note: no invented through-line. Now just names the three current roles and says plainly that they are not the same field. |
-| `standfirst` | Home, drop-cap paragraph | Rewritten. Leads with "I don't have one yet" and defends working broadly. This is a stance, so make sure it's the one you want to take publicly. |
+| `thesis` | Home, lead headline | **Now adapted from your own LinkedIn bio**, not drafted by me. Trimmed to the greeting plus the representation-learning / time-series line. |
+| `standfirst` | Home, opening paragraph | **Also from your LinkedIn bio**, trimmed to current work plus the "still figuring out what to specialize in" line. The resume-listing of ForgeQB / health department / Harvard is dropped here, since each has its own page. |
 | `statsHighlights` | Cover lines | Reworded. |
 | `appointments[].deck` | Research, pull quotes | 4 drafted one-liners. The Theorem one ("If a language model writes the specification, who checks the specification?") is the most editorializing. |
 | `appointments[].narrative` | Research, body copy | 4 drafted paragraphs. **These contain interpretive claims your resume does not support** — see §2. |
@@ -26,12 +26,10 @@ came from your resume; all of it is inference from your resume plus your essays.
 
 ### Page-level copy
 
-- `app/page.tsx` — the **"Now"** block. I rewrote it from your resume. The old
-  site said "single-cell disease co-embeddings at MIT CSAIL," which contradicts
-  your resume (financial markets). I went with the resume. Confirm which is current.
-- `app/page.tsx` — the **"Open to"** block. I narrowed it to research/internships.
-  The old site also said "co-founder opportunities." I dropped that. Put it back if
-  you still mean it.
+- `app/page.tsx` — the **"Now"** and **"Open to"** blocks are now written from
+  your LinkedIn bio rather than my inference. Note the old site said
+  "co-founder opportunities" under Open To; I dropped that. Put it back if you
+  still mean it.
 - `app/interests/page.tsx` — the "Offline" paragraph, including *"being bad at
   something in public, repeatedly, until I wasn't."* Pure invention. Replace if
   it doesn't sound like you.
@@ -56,7 +54,31 @@ These read as fact on the page but are my inference:
 
 ---
 
-## 3. Factual corrections I made
+## 3. Facts from your LinkedIn bio that were NOT in the resume
+
+Your bio contained three things `new-resume.txt` does not, now reflected on the site:
+
+- **CS double major.** `profile.degree` is now "B.A. Data Science and Computer
+  Science". Your resume says Data Science only. **Update the resume.**
+- **MIT AI Safety Fundamentals Fellowship.** Mentioned in the home standfirst,
+  but it has *no entry on the Research page* because I don't have dates, a
+  location, or bullets for it. Give me those and it becomes a proper entry.
+- **The ForgeQB outreach videos.** Now the ForgeQB pull quote, close to verbatim,
+  replacing a line I had invented.
+
+### One conflict to resolve
+
+**ForgeQB post views: your resume says `24k+`, your LinkedIn bio says `26K+`.**
+The site currently shows **24k+** in the stat row, following the resume. The pull
+quote deliberately omits a number so the two don't contradict each other on the
+same page. Pick one and I'll make them agree.
+
+Also note your bio says "close to 500 downloads" where the resume says "500
+downloads"; the site uses 500.
+
+---
+
+## 4. Factual corrections I made
 
 Changes to the *content* of `new-resume.txt`, made deliberately:
 
@@ -76,7 +98,7 @@ Changes to the *content* of `new-resume.txt`, made deliberately:
 
 ---
 
-## 4. Structural decisions
+## 5. Structural decisions
 
 - **Nav is now 4 sections** — Research, Engineering, Writing, Interests — per your
   call. Research holds the four appointments. Engineering leads with Fort Bend
@@ -113,7 +135,7 @@ write-ups later, that route should come back. Recover the old version with:
 
 ---
 
-## 5. Copy rules now enforced
+## 6. Copy rules now enforced
 
 From the `design-taste-frontend` skill, applied across every visible string:
 
@@ -137,7 +159,7 @@ the Writing index, and the large entry numerals. Say the word and they go.
 
 ---
 
-## 6. Design changes
+## 7. Design changes
 
 Kept: warm newsprint, Bodoni display, single red, the cover that splits into
 TIME | LESS, the magazine grid.
@@ -172,7 +194,7 @@ Changed:
 
 ---
 
-## 7. Things I could not verify
+## 8. Things I could not verify
 
 - **`forge-qb.com`** — I linked it as `https://forge-qb.com`. Untested.
 - **`metadataBase`** is set to `https://airjan-airlines.github.io` from your git
