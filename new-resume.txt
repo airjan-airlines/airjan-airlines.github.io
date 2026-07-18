@@ -1,0 +1,78 @@
+Education
+University of California, Berkeley B.A. Data Science — 4.0/4.0 Experience
+Berkeley, CA
+2028
+Quantitative Finance Researcher & Software Engineer MIT Computer Science & Artificial Intelligence Laboratory (Mantis) May 2026 - Present
+Cambridge, MA
+• Designed a novel self-supervised temporal representation learning framework for financial markets to learn regime-aware stock embeddings
+from multimodal market data.
+• Built scalable financial data and evaluation pipelines in PyTorch, benchmarking learned embeddings using information coefficient metrics,
+linear probing, UMAP visualization, and out-of-sample portfolio backtesting.
+• Developed production features for the Mantis platform using React, TypeScript, FastAPI, Zustand, and Docker, contributing bug-fixes,
+feature improvements, and visualization tooling.
+• Designed and implemented a full-stack swarm intelligence simulation framework into Mantis with aligned UMAP visualizations to model
+evolving agent beliefs, emotions, and personalities.
+Scientific Machine Learning Researcher Centrum IntelliPhysics; Johns Hopkins University May 2026 - Present
+Remote
+• Developed CNN-MLP latent fusion and DeepONet nueral operator baselines in PyTorch to predict tactile acceleration signals from visual
+surface textures for multimodal tactile signal prediction.
+• Evaluated cross-material and cross-velocity generalization using held-out material families and trial velocities to assess model robustness.
+• Identified limitations of DeepONets on high-frequency tactile signals and proposed frequency-domain modeling using FFT representations to
+improve learning stability and reconstruction quality.
+AI Safety Research Fellow Theorem.dev; Secure Program Synthesis Fellowship, Apart Research June 2026 – Present
+Remote
+• Developing an automated specification synthesis pipeline for C programs in ASCL using Python, Frama-C, and SMT-based formal
+verification tools to improve reliability of LLM-generated specifications.
+• Designed an iterative verification framework combining property-based testing, mutation testing, variant discovery, and formal verification
+loops for agent-driven specification refinement.
+• Implemented novel memory-augmented multi-agent architecture and verification loops to improve inductive proof generation and SMT
+formal verification rates.
+Data Science Intern Summer 2025
+Fort Bend County Health Department Missouri City, TX
+• Led analysis of 2021 mortality data in R, drafting a statistical brief for county leadership on leading causes of death across 5 demographic
+subgroups.
+• Built an end-to-end mortality analytics pipeline (SQL, R) computing age-adjusted rates and running T-tests, Chi-Square, and K-S tests,
+visualized via ggplot2.
+• Implemented XGBoost and Prophet models to forecast county infectious disease cases, reducing RMSE by over 50% compared to ARIMA
+baseline.
+Student Researcher Summer 2025
+Harvard OpenBio Student Research Institute Remote
+• Led a pancancer bioinformatics research project analyzing somatic copy number alteration effects on gene expression across 3,527 tumors,
+under PhD-student mentorship.
+• Applied PCA, PLS, and multiple linear regression to mRNA-sequencing data finding a novel relationship between SCNAs and pancancer
+RNA-seq dimensionality.
+• First-authored 30 Page research paper on project results; abstract published in Harvard OpenBio affiliated issue of STEM Fellowship
+Journal.
+Projects
+ForgeQB | Electron, FlaskAPI, SQLite, FastAPI, PostgreSQL Feb. 2025 – Present
+• Lead team of 4 developers nationwide to create Quizbowl studying adaptive-learning desktop app, reaching 500 downloads and 24k+ post
+views.
+• Engineered NLP question ingestion and topic clustering pipeline and epsilon-greedy softmax-based question recommendation system,
+tailoring question topics to user weaknesses.
+• Prototyped RL-based recommendation approach using DQN and student-answering simulation across reward structures to benchmark
+against production softmax system.
+setos.ai Startup Prototype & Pitch | Python, FastAPI, React, PostgreSQL June 2025 – Nov. 2025
+• Led a 3-person team to build a platform generating personalized learning pathways across 1,000,000+ research papers using natural
+language queries.
+• Designed a content-based recommendation engine using SciBERT embeddings, pgvector similarity search, LLM-based query expansion, and
+the kneedle algorithm to auto-tune pathway length.
+ECG Classification: 1D CNN for ECG classification | Python, Pytorch • Trained 1D CNN in PyTorch for ECG abnormality classification, achieving AUC of 0.98 on first-pass modeling.
+Spring 2026
+• Interpreted model predictions via Grad-CAM, identifying decision-driving signal regions (ST-segment, QRS complex) for clinical
+explainability.
+• Optimized model performance through Optuna hyperparameter search, tuning dropout, batch sizes, and learning rate scheduling
+Equities Backtesting Dashboard | Python, Streamlit, Pandas, NumPy Febuary 2026
+• Built an interactive backtesting platform for systematic equity strategies including EMA crossover momentum and mean-reversion, with
+configurable parameters (EMA horizons, log return thresholds, position sizing)
+• Integrated Monte Carlo simulation framework (block bootstrap, parametric methods) for forward-looking risk analysis and strategy
+stress-testing across any input ticker
+• Designed modular architecture allowing rapid iteration on strategy logic, enabling side-by-side performance comparison across parameter
+regimes
+Technical Skills
+Programming Languages: Python, Java, SQL, R, JavaScript
+AI/ML: PyTorch, TensorFlow, Scikit-learn, XGBoost, Neural Networks, Graph Neural Networks, Contrastive Learning, Neural
+Operators, Time-Series, NLP
+Data/Scientific Computing: Pandas, NumPy, SciPy, Matplotlib, PostgreSQL, pgvector, TidyVerse, ggplot2
+Software Engineering: React, FastAPI, Flask, Docker, Git, REST APIs, Electron
+Domains: Representation Learning, Scientific Machine Learning, Physics-Informed Machine Learning, Bioinformatics,
+Quantitative Finance, Formal Verification

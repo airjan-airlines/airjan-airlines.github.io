@@ -1,46 +1,60 @@
+import type { Metadata } from "next";
 import PageTransition from "@/components/PageTransition";
+import { SectionOpener, Reveal } from "@/components/Editorial";
+import { interests, skills } from "@/data/resume";
+
+export const metadata: Metadata = {
+  title: "Interests",
+  description: "Offline life, and the tools that carry across every project.",
+};
 
 export default function Interests() {
-  const interests = [
-    {
-      topic: "Badminton",
-      detail: "I spent much of my highschool years playing competitive badminton, and I continue to play recreationally. Hit me up if you're ever trying to play."
-    },
-    {
-      topic: "Quizbowl",
-      detail: "I love studying trivia, particularly art history, philosophy, and social science. More recently I've been interested in theoretical physics and its connections to CS and AI."
-    },
-    {
-      topic: "Tennis",
-      detail: "More recently I've been playing a ton of tennis with friends. I'm trying to learn to actually backhand (help. please)."
-    }
-  ];
-
   return (
     <PageTransition>
-      <div className="max-w-4xl mx-auto py-12">
-        <h1 className="text-6xl md:text-8xl font-display mb-4">Interests</h1>
-        <div className="editorial-rule-thin"></div>
+      <SectionOpener
+        title="Interests"
+        deck="What I do when I'm not at a terminal, and what I reach for when I am."
+      />
 
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-16">
-          <div className="md:col-span-1 border-r border-ink/20 pr-8">
-            <h3 className="text-3xl font-display mb-6">My Offline Life</h3>
-            <p className="font-body text-lg leading-relaxed drop-cap">
-              The best way to understand the world is to engage with it directly.
-              Pursuing various activities, particularly sports, has helped me develop a better understanding of the problems people engage with and intuition for buiding.
-            </p>
-          </div>
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-y-16 gap-x-10">
+        <div className="md:col-span-5">
+          <h2 className="text-2xl mb-6">Offline</h2>
+          <p className="font-body text-lg leading-relaxed measure drop-cap">
+            Most of what I know about building things for other people, I
+            learned from sport. Being visibly bad at something in front of other
+            people, for long enough to get good at it, turns out to be decent
+            training for shipping software.
+          </p>
+        </div>
 
-          <div className="md:col-span-1 space-y-12">
-            {interests.map((item, i) => (
-              <div key={i}>
-                <h4 className="small-caps text-time-red font-bold mb-2">{item.topic}</h4>
-                <p className="font-body text-ink-light">{item.detail}</p>
+        <div className="md:col-span-6 md:col-start-7 space-y-10">
+          {interests.map((item, i) => (
+            <Reveal key={item.topic} delay={i * 0.06}>
+              <div className="border-t border-rule-faint pt-4">
+                <h3 className="label text-accent mb-2">{item.topic}</h3>
+                <p className="font-body text-base leading-relaxed text-ink-light measure">
+                  {item.detail}
+                </p>
               </div>
-            ))}
-          </div>
+            </Reveal>
+          ))}
         </div>
       </div>
+
+      {/* Skills as an editorial index, not bars or badges. */}
+      <section className="mt-32 pt-10 border-t-2 border-accent">
+        <h2 className="label mb-10">Index of tools</h2>
+        <dl className="grid grid-cols-1 md:grid-cols-12 gap-y-8 gap-x-10">
+          {Object.entries(skills).map(([category, items]) => (
+            <div key={category} className="md:col-span-4">
+              <dt className="label text-ink mb-3">{category}</dt>
+              <dd className="font-body text-base leading-relaxed text-ink-light">
+                {items.join(", ")}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </section>
     </PageTransition>
   );
 }

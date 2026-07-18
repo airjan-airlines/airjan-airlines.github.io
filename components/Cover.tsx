@@ -1,99 +1,173 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
-import { statsHighlights } from "@/data/resume";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
+import { statsHighlights, profile } from "@/data/resume";
 
+/**
+ * The cover tears down the middle and the halves slide apart, splitting the
+ * masthead into TIME | LESS.
+ *
+ * The word is rendered at full viewport width inside both panels, with the
+ * right panel's copy offset by -50vw. The two halves line up across the seam
+ * and read as one continuous word until the split.
+ */
 export default function Cover({ onOpen }: { onOpen: () => void }) {
   const [isOpen, setIsOpen] = useState(false);
   const [showTeasers, setShowTeasers] = useState(false);
+  const reduced = useReducedMotion();
+
+  const open = useCallback(() => {
+    setIsOpen((already) => {
+      if (already) return true;
+      // Let the split play out before unmounting.
+      setTimeout(onOpen, reduced ? 0 : 900);
+      return true;
+    });
+  }, [onOpen, reduced]);
+
+  // Reduced motion: skip the full-screen split entirely.
+  useEffect(() => {
+    if (reduced) onOpen();
+  }, [reduced, onOpen]);
 
   useEffect(() => {
-    const teaserTimeout = setTimeout(() => setShowTeasers(true), 500);
-    const openTimeout = setTimeout(() => {
-      setIsOpen(true);
-      setTimeout(onOpen, 1000); // Trigger the unmount of this full-page cover
-    }, 3500); // Wait 3.5s before opening
-
+    if (reduced) return;
+    const teasers = setTimeout(() => setShowTeasers(true), 450);
+    // Auto-advance is a fallback, not the primary path — any input beats it.
+    const auto = setTimeout(open, 5200);
     return () => {
-      clearTimeout(teaserTimeout);
-      clearTimeout(openTimeout);
+      clearTimeout(teasers);
+      clearTimeout(auto);
     };
-  }, [onOpen]);
+  }, [open, reduced]);
 
-  const panelVariants = {
+  // Any intent to proceed opens the issue.
+  useEffect(() => {
+    if (reduced) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (["Enter", " ", "ArrowDown", "PageDown", "Escape"].includes(e.key)) {
+        e.preventDefault();
+        open();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    window.addEventListener("wheel", open, { passive: true, once: true });
+    window.addEventListener("touchmove", open, { passive: true, once: true });
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("wheel", open);
+      window.removeEventListener("touchmove", open);
+    };
+  }, [open, reduced]);
+
+  if (reduced) return null;
+
+  const panel = {
     initial: { x: 0 },
-    openedLeft: { x: "-100%", transition: { duration: 1, ease: "easeInOut" as const } },
-    openedRight: { x: "100%", transition: { duration: 1, ease: "easeInOut" as const } }
+    left: { x: "-101%", transition: { duration: 0.9, ease: [0.77, 0, 0.175, 1] as const } },
+    right: { x: "101%", transition: { duration: 0.9, ease: [0.77, 0, 0.175, 1] as const } },
   };
+
+  const masthead =
+    "font-display font-bold text-accent leading-[0.82] tracking-[-0.03em] text-center text-[22vw] w-screen";
 
   return (
     <AnimatePresence>
       {!isOpen && (
-        <div className="fixed inset-0 z-[100] flex overflow-hidden pointer-events-none">
-          {/* Left Panel */}
+        <div className="fixed inset-0 z-[100] flex overflow-hidden">
+          {/* Left half — shows "TIME" */}
           <motion.div
-            className="w-1/2 h-full bg-base border-r border-time-red/30 relative overflow-hidden"
-            variants={panelVariants}
+            className="w-1/2 h-full bg-base relative overflow-hidden"
+            variants={panel}
             initial="initial"
             animate="initial"
-            exit="openedLeft"
+            exit="left"
           >
-            <div className="absolute top-0 left-0 w-[200%] h-full z-0">
-              <Image src="/arjun_image.jpg" alt="Cover Image" fill priority className="object-cover object-center grayscale contrast-125 opacity-70 mix-blend-multiply" />
+            <div className="absolute inset-y-0 left-0 w-screen">
+              <Image
+                src="/arjun_image.jpg"
+                alt=""
+                fill
+                priority
+                sizes="100vw"
+                className="object-cover object-center grayscale contrast-[1.15] opacity-[0.55] mix-blend-multiply"
+              />
             </div>
-
-            {/* The Masthead - Left half (we fake the clipping by making the container 50% width and overflowing it relative to a wider absolutely positioned inner) */}
-            <div className="absolute top-8 left-8 right-[-100%] z-10">
-              <h1 className="text-8xl md:text-[12rem] tracking-tighter text-time-red leading-none pb-4 inline-block relative">
-                TIME
-                <div className="absolute bottom-0 left-0 w-full editorial-rule-red mt-0 mb-0"></div>
+            <div className="absolute top-[16vh] left-0 w-screen">
+              <h1 className={masthead} aria-label={`${profile.name}. Timeless`}>
+                TIMELESS
               </h1>
             </div>
           </motion.div>
 
-          {/* Right Panel */}
+          {/* Right half — same content, shifted left by half a viewport */}
           <motion.div
-            className="w-1/2 h-full bg-base border-l border-time-red/30 relative overflow-hidden"
-            variants={panelVariants}
+            className="w-1/2 h-full bg-base relative overflow-hidden"
+            variants={panel}
             initial="initial"
             animate="initial"
-            exit="openedRight"
+            exit="right"
           >
-            <div className="absolute top-0 left-[-100%] w-[200%] h-full z-0">
-              <Image src="/arjun_image.jpg" alt="Cover Image" fill priority className="object-cover object-center grayscale contrast-125 opacity-70 mix-blend-multiply" />
+            <div className="absolute inset-y-0 left-[-50vw] w-screen">
+              <Image
+                src="/arjun_image.jpg"
+                alt="Arjun Desikan"
+                fill
+                priority
+                sizes="100vw"
+                className="object-cover object-center grayscale contrast-[1.15] opacity-[0.55] mix-blend-multiply"
+              />
+            </div>
+            <div className="absolute top-[16vh] left-[-50vw] w-screen">
+              <p className={masthead} aria-hidden>
+                TIMELESS
+              </p>
             </div>
 
-            <div className="absolute top-8 left-[-100%] right-8 z-10">
-              <h1 className="text-8xl md:text-[12rem] tracking-tighter text-time-red leading-none pb-4 inline-block relative ml-8">
-                LESS
-                <div className="absolute bottom-0 left-0 w-full editorial-rule-red mt-0 mb-0"></div>
-              </h1>
+            <div className="absolute top-8 right-8 text-right z-20">
+              <p className="label">{profile.issueLine}</p>
+              <p className="label text-ink">{profile.issueName}</p>
             </div>
 
-            <div className="absolute top-8 right-8 z-10">
-              <p className="small-caps text-xs text-ink-light">Vol. 1 — 2026</p>
-              <p className="small-caps text-xs text-ink-light font-bold">The Builder Issue</p>
-            </div>
-
-            {/* Cover Lines right side */}
-            <div className="absolute right-8 top-1/4 w-48 z-20">
-              {statsHighlights.map((stat: string, idx: number) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: showTeasers ? 1 : 0, y: showTeasers ? 0 : 10 }}
-                  transition={{ delay: idx * 0.4, duration: 0.8 }}
-                  className="mb-8"
+            {/* Cover lines typeset in sequentially */}
+            <ul className="absolute right-8 md:right-12 top-[46vh] w-44 md:w-56 z-20 space-y-7">
+              {statsHighlights.map((stat, i) => (
+                <motion.li
+                  key={stat}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={showTeasers ? { opacity: 1, y: 0 } : {}}
+                  transition={{
+                    type: "spring",
+                    duration: 0.6,
+                    bounce: 0,
+                    delay: i * 0.28,
+                  }}
+                  className="font-sans text-sm font-medium leading-snug bg-base/75 px-1"
                 >
-                  <p className="text-sm font-bold font-sans tracking-tight text-ink bg-base/80 p-1">
-                    {stat}
-                  </p>
-                </motion.div>
+                  {stat}
+                </motion.li>
               ))}
-            </div>
+            </ul>
           </motion.div>
+
+          {/* The affordance. Covers should invite opening, not just wait. */}
+          <button
+            type="button"
+            onClick={open}
+            className="absolute inset-0 z-30 flex items-end justify-center pb-10 cursor-pointer group"
+            aria-label="Open the issue"
+          >
+            <motion.span
+              className="label text-ink group-hover:text-accent transition-colors"
+              initial={{ opacity: 0 }}
+              animate={showTeasers ? { opacity: 1 } : {}}
+              transition={{ delay: 1.1, duration: 0.6 }}
+            >
+              Open the issue
+            </motion.span>
+          </button>
         </div>
       )}
     </AnimatePresence>

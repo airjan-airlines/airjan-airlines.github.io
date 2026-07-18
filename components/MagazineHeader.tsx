@@ -4,6 +4,8 @@ import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { navItems, sectionNameFor } from "./nav";
+import { profile } from "@/data/resume";
 
 export default function MagazineHeader() {
   const { scrollY } = useScroll();
@@ -11,31 +13,59 @@ export default function MagazineHeader() {
   const pathname = usePathname();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
-    const previous = scrollY.getPrevious() || 0;
-    if (latest > previous && latest > 100) {
-      setVisible(false); // scrolling down
-    } else {
-      setVisible(true); // scrolling up
-    }
+    const previous = scrollY.getPrevious() ?? 0;
+    // Only hide well past the fold, so the header doesn't flicker at the top.
+    setVisible(!(latest > previous && latest > 140));
   });
 
-  if (pathname === "/") return null; // Don't show on the cover page
+  // The cover is its own world; no running header over it.
+  if (pathname === "/") return null;
 
-  const sectionName = pathname.split('/')[1]?.toUpperCase() || 'DIRECTORY';
+  const section = sectionNameFor(pathname);
 
   return (
     <motion.header
-      className="fixed top-6 left-8 right-8 z-[60] flex justify-between items-center bg-base/90 backdrop-blur-sm py-2 border-b border-ink/20"
-      initial={{ y: -100 }}
-      animate={{ y: visible ? 0 : -100 }}
-      transition={{ duration: 0.3 }}
+      className="fixed top-4 left-6 right-6 md:top-7 md:left-14 md:right-14 z-50"
+      initial={{ y: 0, opacity: 1 }}
+      animate={{ y: visible ? 0 : -80, opacity: visible ? 1 : 0 }}
+      // Spring, not ease-in-out. Bounce 0 — this is chrome, not a delighter.
+      transition={{ type: "spring", duration: 0.4, bounce: 0 }}
     >
-      <div className="flex gap-4 items-center">
-        <Link href="/" className="font-display font-bold text-xl hover:text-time-red transition-colors">TIME</Link>
-        <span className="small-caps text-xs text-ink-light">Vol. 1 — 2026</span>
-      </div>
-      <div>
-        <span className="small-caps text-xs font-bold">{sectionName}</span>
+      <div className="bg-base/90 backdrop-blur-[2px] pb-2 border-b border-rule flex items-baseline justify-between gap-6">
+        <div className="flex items-baseline gap-4 min-w-0">
+          <Link
+            href="/"
+            className="font-display font-bold text-xl leading-none link-rule shrink-0"
+            aria-label={`${profile.name}, cover`}
+          >
+            TIME
+          </Link>
+          <span className="label hidden sm:inline shrink-0">
+            {profile.issueLine}
+          </span>
+        </div>
+
+        <nav aria-label="Sections" className="flex items-baseline gap-5 md:gap-7">
+          {navItems.map((item) => {
+            const active = pathname.startsWith(item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={active ? "page" : undefined}
+                className={`label transition-colors duration-200 hover:text-accent ${
+                  active ? "text-accent" : ""
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+        </nav>
+
+        <span className="label hidden lg:inline text-ink shrink-0">
+          {section}
+        </span>
       </div>
     </motion.header>
   );
