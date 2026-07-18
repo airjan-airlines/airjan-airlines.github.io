@@ -250,8 +250,19 @@ the three call sites in `app/page.tsx` and it reverts to static text.
 - **`forge-qb.com`** — I linked it as `https://forge-qb.com`. Untested.
 - **`metadataBase`** is set to `https://airjan-airlines.github.io` from your git
   remote. Change it if you point a custom domain at this.
-- **The cover photo** is still `/arjun_image.jpg` from the old site. Probably a
-  high-school photo. Worth replacing.
+- **The cover photo is the real constraint here.** `/arjun_image.jpg` is a 3:4
+  landscape scene: you are small and dead-centre on a bridge, sky across the top
+  third, water across the bottom. That is a nice photograph and a difficult
+  cover image, because a magazine cover wants the subject large and offset, with
+  empty space for the masthead and cover lines.
+
+  What I did is work with it rather than fight it: the crop is biased upward
+  (`PHOTO_POSITION` in `Cover.tsx`) so the sky carries the masthead and you land
+  around 60% down the viewport, with cover lines pushed into the left margin and
+  the issue line into the right. Verified across 16:10, 16:9, tablet and phone.
+
+  **The actual fix is a portrait**, shot with room at the top. If you get one,
+  the only thing to change is `PHOTO_POSITION`.
 - **The TIME masthead.** Worth a conscious decision: the site uses TIME's
   wordmark and signature red border. As a personal homage it's very unlikely to
   be a problem, and the TIME | LESS split is the best idea in the design. But
