@@ -36,7 +36,7 @@ function Masthead() {
         textAnchor="middle"
         textLength="964"
         lengthAdjust="spacing"
-        className="fill-accent"
+        className="fill-base"
         style={{
           fontFamily: "var(--font-display)",
           fontWeight: 700,
@@ -50,16 +50,15 @@ function Masthead() {
 }
 
 /**
- * The portrait is a 3:4 frame with the subject small and centred, sky across
- * the top third and water across the bottom. A wide viewport crops to the
- * middle band, which is precisely where he is, so `object-center` guarantees a
- * collision with anything set over it.
+ * A rim-lit figure against deep shadow, which is the right kind of picture for
+ * a cover: the tonal separation survives grayscale, and the dark field gives
+ * the masthead somewhere to sit.
  *
- * Biasing the crop upward keeps the sky in frame for the masthead and drops the
- * figure into the lower middle, which is how a cover is actually composed:
- * logo in the empty sky, subject below it, cover lines down the margins.
+ * The subject stands at roughly 36% across, left of the seam, so the split
+ * tears the frame beside him rather than through his face. This crop puts his
+ * head near 60% of the viewport height, below the masthead at every width.
  */
-const PHOTO_POSITION = "50% 22%";
+const PHOTO_POSITION = "50% 10%";
 
 export default function Cover({ onOpen }: { onOpen: () => void }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -120,8 +119,9 @@ export default function Cover({ onOpen }: { onOpen: () => void }) {
     },
   };
 
-  const photo =
-    "object-cover grayscale contrast-[1.1] opacity-[0.88] mix-blend-multiply";
+  // Full strength, no multiply: the picture carries the cover rather than
+  // ghosting into the paper the way the old washed-out frame had to.
+  const photo = "object-cover grayscale contrast-[1.05]";
 
   return (
     <AnimatePresence>
@@ -129,7 +129,7 @@ export default function Cover({ onOpen }: { onOpen: () => void }) {
         <div className="fixed inset-0 z-[100] flex overflow-hidden">
           {/* Left half, showing "TIME" */}
           <motion.div
-            className="w-1/2 h-full bg-base relative overflow-hidden"
+            className="w-1/2 h-full bg-ink relative overflow-hidden"
             variants={panel}
             initial="initial"
             animate="initial"
@@ -137,7 +137,7 @@ export default function Cover({ onOpen }: { onOpen: () => void }) {
           >
             <div className="absolute inset-y-0 left-0 w-screen">
               <Image
-                src="/arjun_image.jpg"
+                src="/cover-graduation.jpg"
                 alt=""
                 fill
                 priority
@@ -165,7 +165,7 @@ export default function Cover({ onOpen }: { onOpen: () => void }) {
                     bounce: 0,
                     delay: i * 0.28,
                   }}
-                  className="font-sans text-sm font-medium leading-snug bg-base/80 px-1.5 py-0.5"
+                  className="font-sans text-sm font-medium leading-snug text-base drop-shadow-[0_1px_6px_rgba(0,0,0,0.55)]"
                 >
                   {stat}
                 </motion.li>
@@ -175,7 +175,7 @@ export default function Cover({ onOpen }: { onOpen: () => void }) {
 
           {/* Right half: same content, shifted left by half a viewport */}
           <motion.div
-            className="w-1/2 h-full bg-base relative overflow-hidden"
+            className="w-1/2 h-full bg-ink relative overflow-hidden"
             variants={panel}
             initial="initial"
             animate="initial"
@@ -183,8 +183,8 @@ export default function Cover({ onOpen }: { onOpen: () => void }) {
           >
             <div className="absolute inset-y-0 left-[-50vw] w-screen">
               <Image
-                src="/arjun_image.jpg"
-                alt={`${profile.name} on a bridge`}
+                src="/cover-graduation.jpg"
+                alt={`${profile.name} at graduation`}
                 fill
                 priority
                 sizes="100vw"
@@ -198,10 +198,8 @@ export default function Cover({ onOpen }: { onOpen: () => void }) {
             </div>
 
             <div className="absolute bottom-[12vh] right-6 md:right-10 text-right z-20">
-              <p className="label bg-base/80 px-1.5">{profile.issueLine}</p>
-              <p className="label text-ink bg-base/80 px-1.5">
-                {profile.issueName}
-              </p>
+              <p className="label !text-base/80">{profile.issueLine}</p>
+              <p className="label !text-base">{profile.issueName}</p>
             </div>
           </motion.div>
 
@@ -212,7 +210,7 @@ export default function Cover({ onOpen }: { onOpen: () => void }) {
             aria-label="Open the issue"
           >
             <motion.span
-              className="label text-ink bg-base/80 px-2 py-1 group-hover:text-accent transition-colors"
+              className="label !text-base/80 group-hover:!text-accent transition-colors"
               initial={{ opacity: 0 }}
               animate={showTeasers ? { opacity: 1 } : {}}
               transition={{ delay: 1.1, duration: 0.6 }}

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import PageTransition from "@/components/PageTransition";
-import { SectionOpener, Reveal } from "@/components/Editorial";
+import { SectionOpener, Reveal, SectionImage } from "@/components/Editorial";
 import { interests, skills } from "@/data/resume";
 
 export const metadata: Metadata = {
@@ -14,6 +14,13 @@ export default function Interests() {
       <SectionOpener
         title="Interests"
         deck="What I do when I'm not at a terminal, and what I reach for when I am."
+      />
+
+      <SectionImage
+        src="/pool.jpg"
+        alt="Arjun lining up a shot at a pool table"
+        position="55% 50%"
+        tone="colour"
       />
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-y-16 gap-x-10">

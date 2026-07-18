@@ -250,19 +250,25 @@ the three call sites in `app/page.tsx` and it reverts to static text.
 - **`forge-qb.com`** — I linked it as `https://forge-qb.com`. Untested.
 - **`metadataBase`** is set to `https://airjan-airlines.github.io` from your git
   remote. Change it if you point a custom domain at this.
-- **The cover photo is the real constraint here.** `/arjun_image.jpg` is a 3:4
-  landscape scene: you are small and dead-centre on a bridge, sky across the top
-  third, water across the bottom. That is a nice photograph and a difficult
-  cover image, because a magazine cover wants the subject large and offset, with
-  empty space for the masthead and cover lines.
+- **The cover photo is now the graduation frame**, which is a far better cover
+  image than the bridge: rim light against deep shadow survives grayscale, and
+  you stand at ~36% across, left of the seam, so the split tears beside you
+  rather than through your face. The crop puts your head near 60% of the
+  viewport, below the masthead at every width.
 
-  What I did is work with it rather than fight it: the crop is biased upward
-  (`PHOTO_POSITION` in `Cover.tsx`) so the sky carries the masthead and you land
-  around 60% down the viewport, with cover lines pushed into the left margin and
-  the issue line into the right. Verified across 16:10, 16:9, tablet and phone.
+  **It is only 880x1168.** On a 1440px viewport that upscales about 1.6x, which
+  the grain overlay will partly disguise but will not fix. **Send the original
+  file** if you still have it; it is the one thing standing between this cover
+  and looking properly sharp.
 
-  **The actual fix is a portrait**, shot with room at the top. If you get one,
-  the only thing to change is `PHOTO_POSITION`.
+  Because the frame is dark, the masthead is now cream rather than red (red on
+  near-black fails contrast), and the cover reads as a dark object that tears
+  open onto bright paper. That is a deliberate break from the warm-newsprint
+  system and the most reversible thing here if you dislike it: `fill-base` back
+  to `fill-accent` in `Cover.tsx`, and restore the multiply blend.
+
+  The bridge photo is unused now. I removed it from `public/` (it was 3MB of
+  dead weight) but the original is untouched in `site_images/`.
 - **The TIME masthead.** Worth a conscious decision: the site uses TIME's
   wordmark and signature red border. As a personal homage it's very unlikely to
   be a problem, and the TIME | LESS split is the best idea in the design. But

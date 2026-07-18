@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import Image from "next/image";
 import React from "react";
 
 /** Page shell. The 12-column grid lives here so pages don't re-declare it. */
@@ -77,6 +78,56 @@ export function Reveal({
     >
       {children}
     </motion.div>
+  );
+}
+
+/**
+ * A full-bleed image band, the way a feature opens a spread.
+ *
+ * Negative margins cancel the page padding so the picture runs edge to edge and
+ * is trimmed by the red frame, which is the point: a photograph stopped short
+ * of the margin reads as a content block, one that runs to the trim reads as
+ * print.
+ *
+ * `tone` exists because not every photograph survives desaturation. Images that
+ * carry their weight in structure go grayscale with the rest of the system;
+ * images whose whole appeal is colour keep it, which ui.md explicitly allows.
+ */
+export function SectionImage({
+  src,
+  alt,
+  position = "50% 50%",
+  tone = "mono",
+  caption,
+}: {
+  src: string;
+  alt: string;
+  position?: string;
+  tone?: "mono" | "colour";
+  caption?: string;
+}) {
+  return (
+    <figure className="-mx-6 md:-mx-14 lg:-mx-20 mb-20 md:mb-28">
+      <div className="relative w-full aspect-[2/1] md:aspect-[5/2] overflow-hidden bg-ink/5">
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes="100vw"
+          className={
+            tone === "mono"
+              ? "object-cover grayscale contrast-[1.05]"
+              : "object-cover saturate-[0.92]"
+          }
+          style={{ objectPosition: position }}
+        />
+      </div>
+      {caption && (
+        <figcaption className="label mt-3 px-6 md:px-14 lg:px-20 text-ink-faint">
+          {caption}
+        </figcaption>
+      )}
+    </figure>
   );
 }
 
