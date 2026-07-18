@@ -5,6 +5,7 @@ import Cover from "@/components/Cover";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { navItems } from "@/components/nav";
+import Typeset from "@/components/Typeset";
 import {
   profile,
   thesis,
@@ -55,7 +56,13 @@ export default function Home() {
       >
         {/* Interior masthead */}
         <div className="border-b-2 border-accent pb-5 mb-14 flex flex-wrap items-end justify-between gap-4">
-          <h1 className="text-6xl uppercase leading-[0.85]">{profile.name}</h1>
+          <Typeset
+            as="h1"
+            text={profile.name}
+            play={dismissed}
+            granularity="char"
+            className="text-6xl uppercase leading-[0.85]"
+          />
           <p className="label pb-1">
             {profile.issueLine} · {profile.issueName}
           </p>
@@ -64,10 +71,21 @@ export default function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-16 gap-x-10">
           {/* --- Lead feature ------------------------------------------ */}
           <div className="lg:col-span-7 xl:col-span-8">
-            <h2 className="text-3xl measure mb-8">{thesis}</h2>
-            <p className="font-body text-lg leading-relaxed measure">
-              {standfirst}
-            </p>
+            {/* Both blocks start at the same moment rather than in sequence,
+                so the page sets itself all at once. */}
+            <Typeset
+              as="h2"
+              text={thesis}
+              play={dismissed}
+              granularity="char"
+              className="text-3xl measure mb-8"
+            />
+            <Typeset
+              text={standfirst}
+              play={dismissed}
+              granularity="word"
+              className="font-body text-lg leading-relaxed measure"
+            />
 
             <div className="rule mt-14 mb-8" />
 

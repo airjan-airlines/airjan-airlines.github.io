@@ -7,7 +7,9 @@ import {
   StatRow,
   PullQuote,
   Bullets,
+  NextEntry,
 } from "@/components/Editorial";
+import PageTurn from "@/components/PageTurn";
 import { projects, internship } from "@/data/resume";
 
 export const metadata: Metadata = {
@@ -52,6 +54,9 @@ export default function Engineering() {
                 <div className="rule-faint pt-6">
                   <Bullets items={internship.bullets} />
                   <StackList items={internship.stack} />
+                  {sorted[0] && (
+                    <NextEntry href={`#${sorted[0].slug}`} label={sorted[0].title} />
+                  )}
                 </div>
               </div>
             </div>
@@ -64,7 +69,7 @@ export default function Engineering() {
 
         <div className="space-y-24 md:space-y-32">
           {sorted.map((project, i) => (
-            <Reveal key={project.slug}>
+            <PageTurn key={project.slug}>
               <article id={project.slug} className="scroll-mt-32 group">
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-y-6 gap-x-10">
                   <div className="md:col-span-3">
@@ -104,11 +109,17 @@ export default function Engineering() {
                       <Bullets items={project.bullets} />
                       {project.stats && <StatRow stats={project.stats} />}
                       <StackList items={project.stack} />
+                      {sorted[i + 1] && (
+                        <NextEntry
+                          href={`#${sorted[i + 1].slug}`}
+                          label={sorted[i + 1].title}
+                        />
+                      )}
                     </div>
                   </div>
                 </div>
               </article>
-            </Reveal>
+            </PageTurn>
           ))}
         </div>
       </div>

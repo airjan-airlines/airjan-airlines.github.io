@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import PageTransition from "@/components/PageTransition";
 import {
   SectionOpener,
-  Reveal,
   StackList,
   PullQuote,
   Bullets,
+  NextEntry,
 } from "@/components/Editorial";
+import PageTurn from "@/components/PageTurn";
 import { appointments } from "@/data/resume";
 
 export const metadata: Metadata = {
@@ -27,7 +28,7 @@ export default function Research() {
 
       <div className="space-y-24 md:space-y-32">
         {sorted.map((item, i) => (
-          <Reveal key={item.slug}>
+          <PageTurn key={item.slug}>
             <article id={item.slug} className="scroll-mt-32 group">
               <div className="grid grid-cols-1 md:grid-cols-12 gap-y-6 gap-x-10">
                 {/* Rail: numeral + metadata */}
@@ -63,11 +64,17 @@ export default function Research() {
                     <h3 className="label mb-4">The work</h3>
                     <Bullets items={item.bullets} />
                     <StackList items={item.stack} />
+                    {sorted[i + 1] && (
+                      <NextEntry
+                        href={`#${sorted[i + 1].slug}`}
+                        label={sorted[i + 1].organization}
+                      />
+                    )}
                   </div>
                 </div>
               </div>
             </article>
-          </Reveal>
+          </PageTurn>
         ))}
       </div>
     </PageTransition>

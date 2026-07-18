@@ -194,7 +194,58 @@ Changed:
 
 ---
 
-## 8. Things I could not verify
+## 8. Motion decisions (design-motion-principles, Create mode)
+
+Weighting for a creative portfolio: **Jakub primary** (production polish),
+**Jhey secondary** (a portfolio is allowed a signature moment), Emil selective.
+Both new animations fire once per visit, so the frequency gate permits
+expressive motion here. It would not on a tool someone uses daily.
+
+**Page turn between entries** (`components/PageTurn.tsx`, Research + Engineering)
+
+- Triggered at a scroll *position* with a fixed duration, not scrubbed to scroll
+  progress. The cookbook is explicit that scrubbing ties the animation to scroll
+  speed, so a slow scroll plays a slow mushy turn. Position-triggered always
+  turns at the same rate.
+- Rotation is **14deg, not 90**. A literal page flip is a vestibular trigger and
+  would hide the text mid-turn, which is hostile on a page someone is reading.
+  Shallow rotation from a left-edge origin still reads as paper on a spine.
+- 620ms, slightly over Jakub's 200-500ms polish band. Deliberate: this is the
+  Jhey-weighted signature moment, and a turn that lands too fast reads as a
+  glitch rather than a page.
+
+**"Next" control.** You asked for scroll or a button, so it has both. It is a
+real anchor, not a scroll handler, so it works without JS, is keyboard-operable
+for free, and honours the reduced-motion override on `scroll-behavior`. It also
+does real work: it's a way through a long page, not decoration.
+
+**First-load typeset** (`components/Typeset.tsx`, home)
+
+Two departures from the literal spec, both deliberate:
+
+- **Characters are revealed, not appended.** Appending reflows the paragraph on
+  every keystroke and shifts the whole page below it. Revealing pre-rendered
+  characters costs one paint and zero layout.
+- **No blinking caret**, even though that's the usual typewriter tell. A caret
+  reads as a terminal, and your own `ui.md` says "no monospace anywhere, this is
+  not a dev portfolio that looks like a terminal." Without it the effect reads
+  as type being set, which is the actual magazine reference.
+- **Per-character on the two short display lines, per-word on the paragraph.**
+  Per-character on 250 characters of body copy takes about four seconds and
+  nobody waits. All three blocks start at the same instant, so the page sets
+  itself at once as you asked, finishing in roughly 1.2s.
+- **First load only.** Gated on the cover being dismissed this session, so
+  repeat visits render instantly. Reduced motion renders instantly too.
+- The server renders the **plain, complete text**; the split spans only exist
+  client-side. So search engines and no-JS visitors get clean markup, and screen
+  readers get one sentence via `aria-label` rather than 200 separate spans.
+
+If the typing turns out to be annoying in practice, delete the `play` prop at
+the three call sites in `app/page.tsx` and it reverts to static text.
+
+---
+
+## 9. Things I could not verify
 
 - **`forge-qb.com`** — I linked it as `https://forge-qb.com`. Untested.
 - **`metadataBase`** is set to `https://airjan-airlines.github.io` from your git

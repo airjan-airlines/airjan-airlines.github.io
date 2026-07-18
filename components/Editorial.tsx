@@ -112,6 +112,34 @@ export function StatRow({
   );
 }
 
+/**
+ * Advances to the next entry. This is real navigation on a long page, not a
+ * decorative control: it gives the visitor a way through the section and it
+ * triggers the same page turn that scrolling does.
+ *
+ * Uses an anchor rather than a scroll handler so it works without JS, is
+ * focusable and keyboard-operable for free, and honours the reduced-motion
+ * override on `scroll-behavior`.
+ */
+export function NextEntry({
+  href,
+  label,
+}: {
+  href: string;
+  label: string;
+}) {
+  return (
+    <a href={href} className="group/next mt-10 inline-flex items-baseline gap-3">
+      <span className="label group-hover/next:text-accent transition-colors duration-200">
+        Next
+      </span>
+      <span className="font-body italic text-ink-light group-hover/next:text-accent transition-colors duration-200">
+        {label}
+      </span>
+    </a>
+  );
+}
+
 /** Pull quote — the one place display type spans the measure. */
 export function PullQuote({ children }: { children: React.ReactNode }) {
   return (
