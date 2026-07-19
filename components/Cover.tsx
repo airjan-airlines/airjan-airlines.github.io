@@ -57,10 +57,12 @@ function Masthead() {
  * scene and cropping into it throws away the thing that makes it good. The
  * scene wins over the geometry.
  *
- * Biasing the crop upward keeps the sky in frame for the masthead and drops the
- * figure into the lower middle, with the cover lines held out at the margins.
+ * The crop sits low enough in the source to bring the stone arch into frame,
+ * which is the subject of the photograph as much as he is, while keeping the
+ * figure around 41% of the viewport, clear of the masthead above and the cover
+ * lines held out at the margins.
  */
-const PHOTO_POSITION = "50% 22%";
+const PHOTO_POSITION = "50% 38%";
 
 export default function Cover({ onOpen }: { onOpen: () => void }) {
   const [isOpen, setIsOpen] = useState(false);

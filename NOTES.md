@@ -282,7 +282,11 @@ built for, but that is your call, not mine.
   This means the figure still sits near the seam, so the split passes close to
   him. That is a known, accepted trade: the scene beats the geometry.
 
-  One knob at the top of `Cover.tsx`: `PHOTO_POSITION`, currently `50% 22%`.
+  One knob at the top of `Cover.tsx`: `PHOTO_POSITION`, currently `50% 38%`.
+  That setting brings about two thirds of the stone arch into frame and puts
+  the figure near 41% of the viewport height. Raising the number shows more
+  bridge and pushes him up toward the masthead, which runs out of room around
+  44%; lowering it does the reverse.
 
 - **I did not view the rendered pages.** Build, typecheck, lint, route
   generation, and CSS output are all verified; the actual visual result is not.

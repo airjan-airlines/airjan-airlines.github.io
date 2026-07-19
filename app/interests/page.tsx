@@ -58,7 +58,7 @@ export default function Interests() {
                 href={item.href}
                 className="group flex flex-wrap items-baseline justify-between gap-x-8 gap-y-1 py-5"
               >
-                <span className="font-display font-bold text-2xl leading-tight">
+                <span className="font-display font-bold text-xl leading-tight">
                   <span className="entry-title">{item.domain}</span>
                 </span>
                 <span className="label group-hover:text-accent transition-colors duration-200">
