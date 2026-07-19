@@ -70,7 +70,7 @@ export const profile = {
 
 /** Adapted from Arjun's own LinkedIn bio. His voice, trimmed. */
 export const thesis =
-  "Hi there, I'm Arjun. I'm a Berkeley data science and CS double major, in love with representation learning and time series methods.";
+  "Hi there, I'm Arjun. I'm a Berkeley data science and CS double major in love with representation learning and time series methods.";
 
 /** Adapted from Arjun's own LinkedIn bio. His voice, trimmed. */
 export const standfirst =
@@ -78,9 +78,9 @@ export const standfirst =
 
 /** Cover lines. Each maps to a verifiable resume fact. */
 export const statsHighlights = [
-  "Cutting county forecast error by half.",
-  "A first-authored paper across 3,527 tumors.",
-  "500 downloads on a quizbowl study app.",
+  "Cut county disease forecasting error in half.",
+  "First-authored paper analyzing 3,527 tumors.",
+  "500 downloads on a quizbowl adaptive-learning app.",
 ];
 
 /* ------------------------------------------------------------------ */
@@ -297,7 +297,7 @@ export const researchInterests = [
   },
   {
     domain: "Physics-Informed Machine Learning",
-    where: "Centrum IntelliPhysics",
+    where: "Johns Hopkins",
     href: "/research#jhu-intelliphysics",
   },
   {

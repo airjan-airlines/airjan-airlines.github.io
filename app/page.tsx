@@ -54,15 +54,20 @@ export default function Home() {
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         className="max-w-[1440px] mx-auto"
       >
-        {/* Interior masthead */}
-        <div className="border-b-2 border-accent pb-5 mb-14 flex flex-wrap items-end justify-between gap-4">
+        {/*
+          Interior masthead. The name holds one line at every width: sized in vw
+          against its own character count rather than from the shared display
+          ramp, and taken out of the flex row it used to share with the issue
+          line, which stole the width that forced the wrap.
+        */}
+        <div className="border-b-2 border-accent pb-5 mb-14">
           <Typeset
             as="h1"
             text={profile.name}
             play={dismissed}
-            className="text-6xl uppercase leading-[0.85]"
+            className="text-[clamp(1.9rem,8vw,8.5rem)] uppercase leading-[0.9] whitespace-nowrap"
           />
-          <p className="label pb-1">
+          <p className="label mt-3 md:text-right">
             {profile.issueLine} · {profile.issueName}
           </p>
         </div>
