@@ -250,30 +250,24 @@ the three call sites in `app/page.tsx` and it reverts to static text.
 - **`forge-qb.com`** — I linked it as `https://forge-qb.com`. Untested.
 - **`metadataBase`** is set to `https://airjan-airlines.github.io` from your git
   remote. Change it if you point a custom domain at this.
-- **The cover photo is now the graduation frame**, which is a far better cover
-  image than the bridge: rim light against deep shadow survives grayscale, and
-  you stand at ~36% across, left of the seam, so the split tears beside you
-  rather than through your face. The crop puts your head near 60% of the
-  viewport, below the masthead at every width.
+- **The cover is the bridge photograph**, cropped rather than replaced. I had
+  swapped it for the graduation frame, which was the wrong call: the bridge's
+  problems were crop problems, not photograph problems, and on a personal site
+  the picture that feels like you beats the one that composes more obediently.
 
-  **It is only 880x1168.** On a 1440px viewport that upscales about 1.6x, which
-  the grain overlay will partly disguise but will not fix. **Send the original
-  file** if you still have it; it is the one thing standing between this cover
-  and looking properly sharp.
+  `scale(1.4) translateX(-9%)` moves the figure from 49% to about 36% across,
+  clear of the centre seam that was tearing through him, and makes him large
+  enough to read. `objectPosition: 50% 25%` drops him to roughly 60% of the
+  viewport height, below the masthead.
 
-  Because the frame is dark, the masthead is now cream rather than red (red on
-  near-black fails contrast), and the cover reads as a dark object that tears
-  open onto bright paper. That is a deliberate break from the warm-newsprint
-  system and the most reversible thing here if you dislike it: `fill-base` back
-  to `fill-accent` in `Cover.tsx`, and restore the multiply blend.
+  The source ships at 2800px, which keeps the 1.4x zoom oversampled up to a
+  1920px viewport. Above about 2200px wide it starts to upscale. If you have the
+  original camera file, a larger export is the cheap fix.
 
-  The bridge photo is unused now. I removed it from `public/` (it was 3MB of
-  dead weight) but the original is untouched in `site_images/`.
-- **The TIME masthead.** Worth a conscious decision: the site uses TIME's
-  wordmark and signature red border. As a personal homage it's very unlikely to
-  be a problem, and the TIME | LESS split is the best idea in the design. But
-  it is a real publication's identity, so it's your call to make knowingly
-  rather than by default.
+  Two knobs, both at the top of `Cover.tsx`: `PHOTO_TRANSFORM` for how tight the
+  crop is and where he sits horizontally, `PHOTO_POSITION` for vertical. This is
+  the part most likely to need your eye.
+
 - **I did not view the rendered pages.** Build, typecheck, lint, route
   generation, and CSS output are all verified; the actual visual result is not.
   Run `npm run dev` and look at it — particularly the cover split alignment at

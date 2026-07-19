@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     title: profile.name,
     description: thesis,
     type: "website",
-    images: ["/cover-graduation.jpg"],
+    images: ["/bridge.jpg"],
   },
   twitter: {
     card: "summary_large_image",

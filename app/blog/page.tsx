@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import PageTransition from "@/components/PageTransition";
 import Link from "next/link";
 import { getAllEssays } from "@/utils/markdown";
-import { SectionOpener, Reveal, SectionImage } from "@/components/Editorial";
+import { Reveal, SectionCover } from "@/components/Editorial";
 
 export const metadata: Metadata = {
   title: "Writing",
@@ -14,15 +14,14 @@ export default function Writing() {
 
   return (
     <PageTransition>
-      <SectionOpener
-        title="Writing"
-        deck="Essays written mostly under time pressure, kept mostly unedited."
-      />
-
-      <SectionImage
+      <SectionCover
         src="/beach.jpg"
         alt="Stilt houses on a beach under an overcast sky"
-        position="50% 55%"
+        title="Writing"
+        deck="Essays written mostly under time pressure, kept mostly unedited."
+        position="50% 62%"
+        align="top"
+        ink="ink"
       />
 
       {essays.length === 0 ? (

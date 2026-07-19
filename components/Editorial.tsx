@@ -93,26 +93,46 @@ export function Reveal({
  * carry their weight in structure go grayscale with the rest of the system;
  * images whose whole appeal is colour keep it, which ui.md explicitly allows.
  */
-export function SectionImage({
+export function SectionCover({
   src,
   alt,
+  title,
+  deck,
   position = "50% 50%",
   tone = "mono",
-  caption,
+  align = "top",
+  ink = "ink",
 }: {
   src: string;
   alt: string;
+  title: string;
+  deck: string;
   position?: string;
   tone?: "mono" | "colour";
-  caption?: string;
+  /** Which end of the frame the type sits in. Pick the quiet one. */
+  align?: "top" | "bottom";
+  /** Type colour, chosen against the tone of that end of the picture. */
+  ink?: "ink" | "cream";
 }) {
+  const cream = ink === "cream";
+
   return (
-    <figure className="-mx-6 md:-mx-14 lg:-mx-20 mb-20 md:mb-28">
-      <div className="relative w-full aspect-[2/1] md:aspect-[5/2] overflow-hidden bg-ink/5">
+    /*
+     * The title sits on the photograph rather than above it, which is how a
+     * feature actually opens.
+     *
+     * Legibility comes from a gradient wash, not a panel behind the words. A
+     * box reads as a caption pasted onto a picture; a wash reads as printing
+     * over one, and it only touches the end of the frame the type occupies.
+     * The wash is tinted paper over dark type, or ink over light type.
+     */
+    <figure className="-mx-6 md:-mx-14 lg:-mx-20 mb-20 md:mb-28 relative">
+      <div className="relative w-full aspect-[4/5] sm:aspect-[16/10] lg:aspect-[21/9] overflow-hidden bg-ink/5">
         <Image
           src={src}
           alt={alt}
           fill
+          priority
           sizes="100vw"
           className={
             tone === "mono"
@@ -121,12 +141,43 @@ export function SectionImage({
           }
           style={{ objectPosition: position }}
         />
+
+        <div
+          aria-hidden
+          className={`absolute inset-x-0 h-2/3 ${
+            align === "top" ? "top-0" : "bottom-0"
+          } ${
+            cream
+              ? align === "top"
+                ? "bg-gradient-to-b from-ink/70 via-ink/25 to-transparent"
+                : "bg-gradient-to-t from-ink/75 via-ink/30 to-transparent"
+              : align === "top"
+                ? "bg-gradient-to-b from-base/80 via-base/35 to-transparent"
+                : "bg-gradient-to-t from-base/85 via-base/40 to-transparent"
+          }`}
+        />
+
+        <div
+          className={`absolute inset-x-0 px-6 md:px-14 lg:px-20 ${
+            align === "top" ? "top-0 pt-8 md:pt-12" : "bottom-0 pb-8 md:pb-12"
+          }`}
+        >
+          <h1
+            className={`text-[clamp(2.5rem,11vw,9rem)] leading-[0.82] -ml-[0.06em] ${
+              cream ? "text-base" : "text-ink"
+            }`}
+          >
+            {title}
+          </h1>
+          <p
+            className={`font-body italic text-lg mt-4 measure-tight ${
+              cream ? "text-base/85" : "text-ink-light"
+            }`}
+          >
+            {deck}
+          </p>
+        </div>
       </div>
-      {caption && (
-        <figcaption className="label mt-3 px-6 md:px-14 lg:px-20 text-ink-faint">
-          {caption}
-        </figcaption>
-      )}
     </figure>
   );
 }

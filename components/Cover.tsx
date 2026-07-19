@@ -36,7 +36,7 @@ function Masthead() {
         textAnchor="middle"
         textLength="964"
         lengthAdjust="spacing"
-        className="fill-base"
+        className="fill-accent"
         style={{
           fontFamily: "var(--font-display)",
           fontWeight: 700,
@@ -50,15 +50,20 @@ function Masthead() {
 }
 
 /**
- * A rim-lit figure against deep shadow, which is the right kind of picture for
- * a cover: the tonal separation survives grayscale, and the dark field gives
- * the masthead somewhere to sit.
+ * The bridge frame, cropped rather than replaced.
  *
- * The subject stands at roughly 36% across, left of the seam, so the split
- * tears the frame beside him rather than through his face. This crop puts his
- * head near 60% of the viewport height, below the masthead at every width.
+ * Its two real problems were that the figure sat at 49% across, so the centre
+ * split tore straight through him, and that he was too small to read. Both are
+ * crop problems, not photograph problems.
+ *
+ * `scale(1.4) translateX(-9%)` moves him to roughly 36% across, clear of the
+ * seam, and makes him large enough to see. objectPosition then drops him to
+ * about 60% of the viewport height, below the masthead at every width. The
+ * source is 2600px wide, so a 1.4x zoom still samples more pixels than a
+ * 1440px viewport needs.
  */
-const PHOTO_POSITION = "50% 10%";
+const PHOTO_POSITION = "50% 25%";
+const PHOTO_TRANSFORM = "scale(1.4) translateX(-9%)";
 
 export default function Cover({ onOpen }: { onOpen: () => void }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -119,9 +124,8 @@ export default function Cover({ onOpen }: { onOpen: () => void }) {
     },
   };
 
-  // Full strength, no multiply: the picture carries the cover rather than
-  // ghosting into the paper the way the old washed-out frame had to.
-  const photo = "object-cover grayscale contrast-[1.05]";
+  const photo =
+    "object-cover grayscale contrast-[1.12] opacity-[0.9] mix-blend-multiply";
 
   return (
     <AnimatePresence>
@@ -129,7 +133,7 @@ export default function Cover({ onOpen }: { onOpen: () => void }) {
         <div className="fixed inset-0 z-[100] flex overflow-hidden">
           {/* Left half, showing "TIME" */}
           <motion.div
-            className="w-1/2 h-full bg-ink relative overflow-hidden"
+            className="w-1/2 h-full bg-base relative overflow-hidden"
             variants={panel}
             initial="initial"
             animate="initial"
@@ -137,19 +141,29 @@ export default function Cover({ onOpen }: { onOpen: () => void }) {
           >
             <div className="absolute inset-y-0 left-0 w-screen">
               <Image
-                src="/cover-graduation.jpg"
+                src="/bridge.jpg"
                 alt=""
                 fill
                 priority
                 sizes="100vw"
                 className={photo}
-                style={{ objectPosition: PHOTO_POSITION }}
+                style={{
+                  objectPosition: PHOTO_POSITION,
+                  transform: PHOTO_TRANSFORM,
+                }}
               />
             </div>
 
             <div className="absolute top-[5vh] left-0 w-screen">
               <Masthead />
             </div>
+
+            {/* A wash, not a panel. Lifts the cover lines off the water at
+                the foot of the frame without boxing them in. */}
+            <div
+              aria-hidden
+              className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-base via-base/55 to-transparent z-10"
+            />
 
             {/* Cover lines run down the left margin, clear of the centred
                 figure, over the quiet water at the bottom of the frame. */}
@@ -165,7 +179,7 @@ export default function Cover({ onOpen }: { onOpen: () => void }) {
                     bounce: 0,
                     delay: i * 0.28,
                   }}
-                  className="font-sans text-sm font-medium leading-snug text-base drop-shadow-[0_1px_6px_rgba(0,0,0,0.55)]"
+                  className="font-sans text-sm font-medium leading-snug text-ink"
                 >
                   {stat}
                 </motion.li>
@@ -175,7 +189,7 @@ export default function Cover({ onOpen }: { onOpen: () => void }) {
 
           {/* Right half: same content, shifted left by half a viewport */}
           <motion.div
-            className="w-1/2 h-full bg-ink relative overflow-hidden"
+            className="w-1/2 h-full bg-base relative overflow-hidden"
             variants={panel}
             initial="initial"
             animate="initial"
@@ -183,13 +197,16 @@ export default function Cover({ onOpen }: { onOpen: () => void }) {
           >
             <div className="absolute inset-y-0 left-[-50vw] w-screen">
               <Image
-                src="/cover-graduation.jpg"
-                alt={`${profile.name} at graduation`}
+                src="/bridge.jpg"
+                alt={`${profile.name} on a stone bridge`}
                 fill
                 priority
                 sizes="100vw"
                 className={photo}
-                style={{ objectPosition: PHOTO_POSITION }}
+                style={{
+                  objectPosition: PHOTO_POSITION,
+                  transform: PHOTO_TRANSFORM,
+                }}
               />
             </div>
 
@@ -197,9 +214,16 @@ export default function Cover({ onOpen }: { onOpen: () => void }) {
               <Masthead />
             </div>
 
+            {/* A wash, not a panel. Lifts the issue line off the water at
+                the foot of the frame without boxing it in. */}
+            <div
+              aria-hidden
+              className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-base via-base/55 to-transparent z-10"
+            />
+
             <div className="absolute bottom-[12vh] right-6 md:right-10 text-right z-20">
-              <p className="label !text-base/80">{profile.issueLine}</p>
-              <p className="label !text-base">{profile.issueName}</p>
+              <p className="label">{profile.issueLine}</p>
+              <p className="label text-ink">{profile.issueName}</p>
             </div>
           </motion.div>
 
@@ -210,7 +234,7 @@ export default function Cover({ onOpen }: { onOpen: () => void }) {
             aria-label="Open the issue"
           >
             <motion.span
-              className="label !text-base/80 group-hover:!text-accent transition-colors"
+              className="label text-ink group-hover:text-accent transition-colors"
               initial={{ opacity: 0 }}
               animate={showTeasers ? { opacity: 1 } : {}}
               transition={{ delay: 1.1, duration: 0.6 }}
