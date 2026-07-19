@@ -16,7 +16,7 @@ export default function Interests() {
         alt="Arjun lining up a shot at a pool table"
         title="Interests"
         deck="What I do when I'm not at a terminal, and what I reach for when I am."
-        position="58% 42%"
+        position="56% 46%"
         tone="colour"
         align="bottom"
         ink="cream"

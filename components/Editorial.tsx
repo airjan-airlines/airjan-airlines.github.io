@@ -122,7 +122,7 @@ export function SectionCover({
 
   return (
     <figure className="-mx-6 md:-mx-14 lg:-mx-20 -mt-28 md:-mt-36 mb-20 md:mb-28 relative">
-      <div className="relative w-full aspect-[4/5] sm:aspect-[16/10] lg:aspect-[21/9] overflow-hidden bg-ink/5">
+      <div className="section-cover relative w-full overflow-hidden bg-ink/5">
         <Image
           src={src}
           alt={alt}
@@ -154,7 +154,7 @@ export function SectionCover({
 
         <div
           className={`absolute inset-x-0 px-6 md:px-14 lg:px-20 ${
-            align === "top" ? "top-0 pt-24 md:pt-32" : "bottom-0 pb-8 md:pb-12"
+            align === "top" ? "top-0 pt-28 md:pt-36" : "bottom-0 pb-14 md:pb-20"
           }`}
         >
           <h1

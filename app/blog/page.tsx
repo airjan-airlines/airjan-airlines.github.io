@@ -19,7 +19,7 @@ export default function Writing() {
         alt="Stilt houses on a beach under an overcast sky"
         title="Writing"
         deck="Essays written mostly under time pressure, kept mostly unedited."
-        position="50% 62%"
+        position="50% 42%"
         align="top"
         ink="ink"
       />

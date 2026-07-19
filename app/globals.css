@@ -191,6 +191,18 @@
     color: var(--color-accent);
   }
 
+  /*
+   * A section cover fills the screen on arrival.
+   *
+   * Declared twice on purpose: the vh line is the fallback, svh wins where it
+   * is supported. svh rather than dvh because dvh grows as mobile browser
+   * chrome retracts, which resizes the picture mid-scroll; svh is the stable
+   * height and costs only the strip the toolbar was covering anyway.
+   */
+  .section-cover {
+    min-height: 100vh;
+  }
+
   /* --- Interaction -------------------------------------------------- */
   /*
    * Hover is carried by the accent colour and a rule drawn under the title.
@@ -269,6 +281,17 @@
     font-size: var(--text-xs);
     letter-spacing: 0.12em;
     text-transform: uppercase;
+  }
+}
+
+/*
+ * The svh upgrade is written as a feature query because a plain duplicate
+ * declaration gets collapsed at minification, silently taking the vh fallback
+ * with it.
+ */
+@supports (min-height: 100svh) {
+  .section-cover {
+    min-height: 100svh;
   }
 }
 
