@@ -1,124 +1,207 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useSyncExternalStore } from "react";
 import Cover from "@/components/Cover";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
+import { navItems } from "@/components/nav";
+import Typeset from "@/components/Typeset";
+import {
+  profile,
+  thesis,
+  standfirst,
+  appointments,
+  projects,
+} from "@/data/resume";
+
+/** Server renders nothing cover-related; the client takes over after hydration. */
+const noopSubscribe = () => () => {};
 
 export default function Home() {
-  const [coverOpened, setCoverOpened] = useState<boolean>(false);
-  const [isClient, setIsClient] = useState(false);
+  const isClient = useSyncExternalStore(
+    noopSubscribe,
+    () => true,
+    () => false,
+  );
+  const [dismissed, setDismissed] = useState(false);
+  // The cover is a first-impression moment, not a toll booth on every visit.
+  // Read once during render — the gate above keeps this off the server pass.
+  const [alreadySeen] = useState(
+    () =>
+      typeof window !== "undefined" &&
+      window.sessionStorage.getItem("hasSeenCover") === "true",
+  );
+  const coverOpened = dismissed || alreadySeen;
+  const reduced = useReducedMotion();
 
-  useEffect(() => {
-    setIsClient(true);
-    if (sessionStorage.getItem("hasSeenCover") === "true") {
-      setCoverOpened(true);
-    }
-  }, []);
+  const lead = appointments[0];
+  const leadProject = projects[0];
 
   return (
     <>
-      {(!isClient || !coverOpened) && (
-        <Cover onOpen={() => {
-          sessionStorage.setItem("hasSeenCover", "true");
-          setCoverOpened(true);
-        }} />
+      {isClient && !coverOpened && (
+        <Cover
+          onOpen={() => {
+            window.sessionStorage.setItem("hasSeenCover", "true");
+            setDismissed(true);
+          }}
+        />
       )}
 
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: coverOpened ? 1 : 0 }}
-        transition={{ duration: 0.8 }}
-        className="max-w-6xl mx-auto pt-24"
-        style={{ pointerEvents: coverOpened ? "auto" : "none" }}
+        initial={false}
+        animate={{ opacity: coverOpened || reduced ? 1 : 0 }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        className="max-w-[1440px] mx-auto"
       >
-        {/* Masthead Interior */}
-        <div className="border-b-2 border-time-red pb-4 mb-12 flex justify-between items-end">
-          <h1 className="text-5xl md:text-8xl tracking-tight leading-none uppercase">Arjun Desikan</h1>
-          <p className="small-caps text-sm mb-2 text-ink-light">The Builder Edition</p>
+        {/*
+          Interior masthead. The name holds one line at every width: sized in vw
+          against its own character count rather than from the shared display
+          ramp, and taken out of the flex row it used to share with the issue
+          line, which stole the width that forced the wrap.
+        */}
+        <div className="border-b-2 border-accent pb-5 mb-14">
+          <Typeset
+            as="h1"
+            text={profile.name}
+            play={dismissed}
+            className="text-[clamp(1.9rem,8vw,8.5rem)] uppercase leading-[0.9] whitespace-nowrap"
+          />
+          <p className="label mt-3 md:text-right">
+            {profile.issueLine} · {profile.issueName}
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
-          <div className="md:col-span-8">
-            <h2 className="text-3xl md:text-5xl mb-6">I build for the communities I'm actually part of.</h2>
-            <p className="text-lg md:text-xl font-body leading-relaxed mb-8 drop-cap">
-              Founder, data scientist, engineer.
-              The domains change: epidemiology, education, genomics.
-              The approach doesn't: find the problem, build the solution, ship it to real people.
-            </p>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-16 gap-x-10">
+          {/* --- Lead feature ------------------------------------------ */}
+          <div className="lg:col-span-7 xl:col-span-8">
+            {/* Both blocks start at the same moment rather than in sequence,
+                so the page sets itself all at once. */}
+            <Typeset
+              as="h2"
+              text={thesis}
+              play={dismissed}
+                className="text-3xl measure mb-8"
+            />
+            <Typeset
+              text={standfirst}
+              play={dismissed}
+              className="font-body text-lg leading-relaxed measure"
+            />
 
-            <div className="editorial-rule"></div>
+            <div className="rule mt-14 mb-8" />
 
-            <h3 className="small-caps text-xl mb-4 font-bold">Featured Selections</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
-              <Link href="/technical" className="group block">
-                <h4 className="text-2xl mb-2 group-hover:-translate-y-1 transition-transform duration-300">Technical Work</h4>
-                <p className="text-sm border-l-2 border-time-red pl-4 text-ink-light">
-                  Machine learning, data science, and AI engineering applied to full-stack.
-                </p>
-              </Link>
-              <Link href="/experience" className="group block">
-                <h4 className="text-2xl mb-2 group-hover:-translate-y-1 transition-transform duration-300">Professional Experience</h4>
-                <p className="text-sm border-l-2 border-time-red pl-4 text-ink-light">
-                  Data science, research, and AI engineering roles.
-                </p>
-              </Link>
-              <Link href="/nontechnical" className="group block">
-                <h4 className="text-2xl mb-2 group-hover:-translate-y-1 transition-transform duration-300">Leadership</h4>
-                <p className="text-sm border-l-2 border-time-red pl-4 text-ink-light">
-                  Organizational roles and non-technical pursuits.
-                </p>
-              </Link>
-              <Link href="/blog" className="group block">
-                <h4 className="text-2xl mb-2 group-hover:-translate-y-1 transition-transform duration-300">Essays</h4>
-                <p className="text-sm border-l-2 border-time-red pl-4 text-ink-light">
-                  Long-form thoughts as a passion.
-                </p>
-              </Link>
+            <h3 className="label mb-8">In this issue</h3>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-12">
+              <article>
+                <p className="label mb-3">Currently</p>
+                <Link
+                  href={`/research#${lead.slug}`}
+                  className="group block"
+                >
+                  <h4 className="text-xl mb-2">
+                    <span className="entry-title">{lead.organization}</span>
+                  </h4>
+                  <p className="font-body text-base text-ink-light measure-tight">
+                    {lead.deck}
+                  </p>
+                </Link>
+              </article>
+
+              <article>
+                <p className="label mb-3">Selected project</p>
+                <Link
+                  href={`/engineering#${leadProject.slug}`}
+                  className="group block"
+                >
+                  <h4 className="text-xl mb-2">
+                    <span className="entry-title">{leadProject.title}</span>
+                  </h4>
+                  <p className="font-body text-base text-ink-light measure-tight">
+                    {leadProject.deck}
+                  </p>
+                </Link>
+              </article>
             </div>
           </div>
 
-          <div className="md:col-span-4 pl-0 md:pl-8 md:border-l border-ink/20">
-            <h3 className="small-caps text-xl mb-4 font-bold">Directory</h3>
-            <ul className="space-y-4">
-              <li><Link href="/technical" className="hover:text-time-red transition-colors text-lg">I. Technical Work</Link></li>
-              <li><Link href="/experience" className="hover:text-time-red transition-colors text-lg">II. Professional Experience</Link></li>
-              <li><Link href="/nontechnical" className="hover:text-time-red transition-colors text-lg">III. Leadership</Link></li>
-              <li><Link href="/blog" className="hover:text-time-red transition-colors text-lg">IV. Essays & Blog</Link></li>
-              <li><Link href="/interests" className="hover:text-time-red transition-colors text-lg">V. Personal Interests</Link></li>
-            </ul>
-
-            <div className="editorial-rule-thin"></div>
-
-            <h3 className="small-caps text-sm mb-2 text-time-red font-bold">Status: Now</h3>
-            <p className="text-sm text-ink-light font-body italic mb-6">
-              Prototyping skateboarding video analysis pipeline and wrapping up AP exams.
-            </p>
-
-            <h3 className="small-caps text-sm mb-2 text-time-red font-bold">Open To</h3>
-            <p className="text-sm text-ink-light font-body mb-6">
-              Interested in co-founder opportunities and internships or research positions across MLE, DS, and AI engineering.
-            </p>
-
-            <h3 className="small-caps text-sm mb-2 text-time-red font-bold">Contact</h3>
-            <ul className="space-y-1">
-              <li>
-                <a href="mailto:arjundesikan2008@gmail.com" className="text-sm font-sans hover:text-time-red transition-colors">
-                  Email ↗
-                </a>
-              </li>
-              <li>
-                <a href="https://www.linkedin.com/in/arjun-desikan-320b76304/" target="_blank" rel="noreferrer" className="text-sm font-sans hover:text-time-red transition-colors">
-                  LinkedIn ↗
-                </a>
-              </li>
-              <li>
-                <a href="https://www.instagram.com/arjun_desikan" target="_blank" rel="noreferrer" className="text-sm font-sans hover:text-time-red transition-colors">
-                  Instagram ↗
-                </a>
+          {/* --- Directory rail ---------------------------------------- */}
+          <aside className="lg:col-span-5 xl:col-span-4 lg:pl-10 lg:border-l border-rule">
+            <h3 className="label mb-6">Contents</h3>
+            <ul className="space-y-0">
+              {navItems.map((item) => (
+                <li key={item.href} className="border-t border-rule-faint">
+                  <Link
+                    href={item.href}
+                    className="group flex items-baseline gap-4 py-3.5"
+                  >
+                    <span className="font-display text-sm text-ink-faint w-6 tabular">
+                      {item.numeral}
+                    </span>
+                    <span className="text-lg group-hover:text-accent group-hover:translate-x-1 transition-all duration-200">
+                      {item.label}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+              <li className="border-t border-rule-faint">
+                <Link
+                  href="/archive"
+                  className="group flex items-baseline gap-4 py-3.5"
+                >
+                  <span className="w-6" aria-hidden />
+                  <span className="text-base text-ink-light group-hover:text-accent transition-colors duration-200">
+                    Archive
+                  </span>
+                </Link>
               </li>
             </ul>
-          </div>
+
+            <div className="mt-12 space-y-8">
+              <section>
+                <h3 className="label text-accent mb-2">Now</h3>
+                <p className="font-body text-base italic text-ink-light measure-tight">
+                  Stock embeddings at MIT CSAIL, tactile feedback models at
+                  Johns Hopkins, and agent swarm intelligence inside the CSAIL
+                  lab platform.
+                </p>
+              </section>
+
+              <section>
+                <h3 className="label mb-2">Open to</h3>
+                <p className="font-body text-base text-ink-light measure-tight">
+                  Research positions and internships in ML. I&apos;m still
+                  figuring out what to specialize in, so I&apos;m open to a
+                  fairly wide range.
+                </p>
+              </section>
+
+              <section>
+                <h3 className="label mb-2">Contact</h3>
+                <ul className="space-y-1">
+                  <li>
+                    <a
+                      href={`mailto:${profile.email}`}
+                      className="text-sm link-rule"
+                    >
+                      Email
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href={profile.linkedin}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-sm link-rule"
+                    >
+                      LinkedIn
+                    </a>
+                  </li>
+                </ul>
+              </section>
+            </div>
+          </aside>
         </div>
       </motion.div>
     </>

@@ -1,99 +1,240 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
-import { statsHighlights } from "@/data/resume";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
+import { statsHighlights, profile } from "@/data/resume";
+
+/**
+ * The cover tears down the middle and the halves slide apart, splitting the
+ * masthead into TIME | LESS.
+ *
+ * The word is rendered at full viewport width inside both panels, with the
+ * right panel's copy offset by -50vw. The two halves line up across the seam
+ * and read as one continuous word until the split.
+ */
+
+/**
+ * The masthead is SVG rather than styled text because a vw font-size cannot
+ * know how wide eight Bodoni capitals actually are: at any size that filled a
+ * narrow screen it overflowed a wide one. Here `textLength` forces the word to
+ * span the viewBox exactly, so it fits by construction at every width, and
+ * `lengthAdjust="spacing"` absorbs the difference in letter-spacing rather than
+ * stretching the glyphs, which would wreck Bodoni's thick-thin contrast.
+ */
+function Masthead() {
+  return (
+    <svg
+      viewBox="0 0 1000 140"
+      className="block w-screen"
+      preserveAspectRatio="xMidYMid meet"
+      aria-hidden
+    >
+      <text
+        x="500"
+        y="112"
+        textAnchor="middle"
+        textLength="964"
+        lengthAdjust="spacing"
+        className="fill-accent"
+        style={{
+          fontFamily: "var(--font-display)",
+          fontWeight: 700,
+          fontSize: "128px",
+        }}
+      >
+        TIMELESS
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * The bridge frame at its natural scale.
+ *
+ * A 1.4x zoom put the figure larger and off the centre seam, which was
+ * technically the better composition and looked worse: the picture is a wide
+ * scene and cropping into it throws away the thing that makes it good. The
+ * scene wins over the geometry.
+ *
+ * The crop sits low enough in the source to bring the stone arch into frame,
+ * which is the subject of the photograph as much as he is, while keeping the
+ * figure around 41% of the viewport, clear of the masthead above and the cover
+ * lines held out at the margins.
+ */
+const PHOTO_POSITION = "50% 38%";
 
 export default function Cover({ onOpen }: { onOpen: () => void }) {
   const [isOpen, setIsOpen] = useState(false);
   const [showTeasers, setShowTeasers] = useState(false);
+  const reduced = useReducedMotion();
+
+  const open = useCallback(() => {
+    setIsOpen((already) => {
+      if (already) return true;
+      setTimeout(onOpen, reduced ? 0 : 900);
+      return true;
+    });
+  }, [onOpen, reduced]);
 
   useEffect(() => {
-    const teaserTimeout = setTimeout(() => setShowTeasers(true), 500);
-    const openTimeout = setTimeout(() => {
-      setIsOpen(true);
-      setTimeout(onOpen, 1000); // Trigger the unmount of this full-page cover
-    }, 3500); // Wait 3.5s before opening
+    if (reduced) onOpen();
+  }, [reduced, onOpen]);
 
+  useEffect(() => {
+    if (reduced) return;
+    const teasers = setTimeout(() => setShowTeasers(true), 450);
+    const auto = setTimeout(open, 5200);
     return () => {
-      clearTimeout(teaserTimeout);
-      clearTimeout(openTimeout);
+      clearTimeout(teasers);
+      clearTimeout(auto);
     };
-  }, [onOpen]);
+  }, [open, reduced]);
 
-  const panelVariants = {
+  useEffect(() => {
+    if (reduced) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (["Enter", " ", "ArrowDown", "PageDown", "Escape"].includes(e.key)) {
+        e.preventDefault();
+        open();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    window.addEventListener("wheel", open, { passive: true, once: true });
+    window.addEventListener("touchmove", open, { passive: true, once: true });
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("wheel", open);
+      window.removeEventListener("touchmove", open);
+    };
+  }, [open, reduced]);
+
+  if (reduced) return null;
+
+  const panel = {
     initial: { x: 0 },
-    openedLeft: { x: "-100%", transition: { duration: 1, ease: "easeInOut" as const } },
-    openedRight: { x: "100%", transition: { duration: 1, ease: "easeInOut" as const } }
+    left: {
+      x: "-101%",
+      transition: { duration: 0.9, ease: [0.77, 0, 0.175, 1] as const },
+    },
+    right: {
+      x: "101%",
+      transition: { duration: 0.9, ease: [0.77, 0, 0.175, 1] as const },
+    },
   };
+
+  const photo =
+    "object-cover grayscale contrast-[1.12] opacity-[0.9] mix-blend-multiply";
 
   return (
     <AnimatePresence>
       {!isOpen && (
-        <div className="fixed inset-0 z-[100] flex overflow-hidden pointer-events-none">
-          {/* Left Panel */}
+        <div className="fixed inset-0 z-[100] flex overflow-hidden">
+          {/* Left half, showing "TIME" */}
           <motion.div
-            className="w-1/2 h-full bg-base border-r border-time-red/30 relative overflow-hidden"
-            variants={panelVariants}
+            className="w-1/2 h-full bg-base relative overflow-hidden"
+            variants={panel}
             initial="initial"
             animate="initial"
-            exit="openedLeft"
+            exit="left"
           >
-            <div className="absolute top-0 left-0 w-[200%] h-full z-0">
-              <Image src="/arjun_image.jpg" alt="Cover Image" fill priority className="object-cover object-center grayscale contrast-125 opacity-70 mix-blend-multiply" />
+            <div className="absolute inset-y-0 left-0 w-screen">
+              <Image
+                src="/bridge.jpg"
+                alt=""
+                fill
+                priority
+                sizes="100vw"
+                className={photo}
+                style={{ objectPosition: PHOTO_POSITION }}
+              />
             </div>
 
-            {/* The Masthead - Left half (we fake the clipping by making the container 50% width and overflowing it relative to a wider absolutely positioned inner) */}
-            <div className="absolute top-8 left-8 right-[-100%] z-10">
-              <h1 className="text-8xl md:text-[12rem] tracking-tighter text-time-red leading-none pb-4 inline-block relative">
-                TIME
-                <div className="absolute bottom-0 left-0 w-full editorial-rule-red mt-0 mb-0"></div>
-              </h1>
-            </div>
-          </motion.div>
-
-          {/* Right Panel */}
-          <motion.div
-            className="w-1/2 h-full bg-base border-l border-time-red/30 relative overflow-hidden"
-            variants={panelVariants}
-            initial="initial"
-            animate="initial"
-            exit="openedRight"
-          >
-            <div className="absolute top-0 left-[-100%] w-[200%] h-full z-0">
-              <Image src="/arjun_image.jpg" alt="Cover Image" fill priority className="object-cover object-center grayscale contrast-125 opacity-70 mix-blend-multiply" />
+            <div className="absolute top-[5vh] left-0 w-screen">
+              <Masthead />
             </div>
 
-            <div className="absolute top-8 left-[-100%] right-8 z-10">
-              <h1 className="text-8xl md:text-[12rem] tracking-tighter text-time-red leading-none pb-4 inline-block relative ml-8">
-                LESS
-                <div className="absolute bottom-0 left-0 w-full editorial-rule-red mt-0 mb-0"></div>
-              </h1>
-            </div>
+            {/* A wash, not a panel. Lifts the cover lines off the water at
+                the foot of the frame without boxing them in. */}
+            <div
+              aria-hidden
+              className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-base via-base/55 to-transparent z-10"
+            />
 
-            <div className="absolute top-8 right-8 z-10">
-              <p className="small-caps text-xs text-ink-light">Vol. 1 — 2026</p>
-              <p className="small-caps text-xs text-ink-light font-bold">The Builder Issue</p>
-            </div>
-
-            {/* Cover Lines right side */}
-            <div className="absolute right-8 top-1/4 w-48 z-20">
-              {statsHighlights.map((stat: string, idx: number) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: showTeasers ? 1 : 0, y: showTeasers ? 0 : 10 }}
-                  transition={{ delay: idx * 0.4, duration: 0.8 }}
-                  className="mb-8"
+            {/* Cover lines run down the left margin, clear of the centred
+                figure, over the quiet water at the bottom of the frame. */}
+            <ul className="absolute left-6 md:left-10 bottom-[12vh] w-44 md:w-56 z-20 space-y-6">
+              {statsHighlights.map((stat, i) => (
+                <motion.li
+                  key={stat}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={showTeasers ? { opacity: 1, y: 0 } : {}}
+                  transition={{
+                    type: "spring",
+                    duration: 0.6,
+                    bounce: 0,
+                    delay: i * 0.28,
+                  }}
+                  className="font-sans text-sm font-medium leading-snug text-ink"
                 >
-                  <p className="text-sm font-bold font-sans tracking-tight text-ink bg-base/80 p-1">
-                    {stat}
-                  </p>
-                </motion.div>
+                  {stat}
+                </motion.li>
               ))}
+            </ul>
+          </motion.div>
+
+          {/* Right half: same content, shifted left by half a viewport */}
+          <motion.div
+            className="w-1/2 h-full bg-base relative overflow-hidden"
+            variants={panel}
+            initial="initial"
+            animate="initial"
+            exit="right"
+          >
+            <div className="absolute inset-y-0 left-[-50vw] w-screen">
+              <Image
+                src="/bridge.jpg"
+                alt={`${profile.name} on a stone bridge`}
+                fill
+                priority
+                sizes="100vw"
+                className={photo}
+                style={{ objectPosition: PHOTO_POSITION }}
+              />
+            </div>
+
+            <div className="absolute top-[5vh] left-[-50vw] w-screen">
+              <Masthead />
+            </div>
+
+            {/* A wash, not a panel. Lifts the issue line off the water at
+                the foot of the frame without boxing it in. */}
+            <div
+              aria-hidden
+              className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-base via-base/55 to-transparent z-10"
+            />
+
+            <div className="absolute bottom-[12vh] right-6 md:right-10 text-right z-20">
+              <p className="label">{profile.issueLine}</p>
+              <p className="label text-ink">{profile.issueName}</p>
             </div>
           </motion.div>
+
+          <button
+            type="button"
+            onClick={open}
+            className="absolute inset-0 z-30 flex items-end justify-center pb-8 cursor-pointer group"
+            aria-label="Open the issue"
+          >
+            <motion.span
+              className="label text-ink group-hover:text-accent transition-colors"
+              initial={{ opacity: 0 }}
+              animate={showTeasers ? { opacity: 1 } : {}}
+              transition={{ delay: 1.1, duration: 0.6 }}
+            >
+              Open the issue
+            </motion.span>
+          </button>
         </div>
       )}
     </AnimatePresence>

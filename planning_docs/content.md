@@ -1,5 +1,7 @@
 # content.md
 
+###TECH STACK: Next.js, React, TypeScript, Tailwind CSS, Vercel
+
 ## Site structure
 
 Five main sections: Home, Work, Blog, Interests, Skills.
