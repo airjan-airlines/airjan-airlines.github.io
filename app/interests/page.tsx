@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import PageTransition from "@/components/PageTransition";
 import { Reveal, SectionCover } from "@/components/Editorial";
-import { interests, skills } from "@/data/resume";
+import { interests, researchInterests } from "@/data/resume";
 
 export const metadata: Metadata = {
   title: "Interests",
@@ -47,19 +48,26 @@ export default function Interests() {
         </div>
       </div>
 
-      {/* Skills as an editorial index, not bars or badges. */}
+      {/* Each domain is a link to the work that backs it, not a keyword. */}
       <section className="mt-32 pt-10 border-t-2 border-accent">
-        <h2 className="text-2xl mb-10">Index of tools</h2>
-        <dl className="grid grid-cols-1 md:grid-cols-12 gap-y-8 gap-x-10">
-          {Object.entries(skills).map(([category, items]) => (
-            <div key={category} className="md:col-span-4">
-              <dt className="label text-ink mb-3">{category}</dt>
-              <dd className="font-body text-base leading-relaxed text-ink-light">
-                {items.join(", ")}
-              </dd>
-            </div>
+        <h2 className="text-2xl mb-10">Research interests</h2>
+        <ul>
+          {researchInterests.map((item) => (
+            <li key={item.domain} className="border-t border-rule-faint">
+              <Link
+                href={item.href}
+                className="group flex flex-wrap items-baseline justify-between gap-x-8 gap-y-1 py-5"
+              >
+                <span className="text-2xl">
+                  <span className="entry-title">{item.domain}</span>
+                </span>
+                <span className="label group-hover:text-accent transition-colors duration-200">
+                  {item.where}
+                </span>
+              </Link>
+            </li>
           ))}
-        </dl>
+        </ul>
       </section>
     </PageTransition>
   );

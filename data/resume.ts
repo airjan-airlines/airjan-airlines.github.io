@@ -276,9 +276,62 @@ export const projects: Project[] = [
 ];
 
 /* ------------------------------------------------------------------ */
+/* Research interests                                                  */
+/* ------------------------------------------------------------------ */
+
+/**
+ * The domains from the resume, each pointed at the work that evidences it.
+ * `content.md`: "Every section should link to evidence. Claims without proof
+ * get cut." A domain nobody can check is a claim.
+ */
+export const researchInterests = [
+  {
+    domain: "Representation Learning",
+    where: "MIT CSAIL, Harvard OpenBio",
+    href: "/research#mit-csail-mantis",
+  },
+  {
+    domain: "Scientific Machine Learning",
+    where: "Johns Hopkins",
+    href: "/research#jhu-intelliphysics",
+  },
+  {
+    domain: "Physics-Informed Machine Learning",
+    where: "Centrum IntelliPhysics",
+    href: "/research#jhu-intelliphysics",
+  },
+  {
+    domain: "Quantitative Finance",
+    where: "MIT CSAIL, Equities Backtesting",
+    href: "/research#mit-csail-mantis",
+  },
+  {
+    domain: "Formal Verification",
+    where: "Theorem.dev, Apart Research",
+    href: "/research#theorem-apart",
+  },
+  {
+    domain: "Bioinformatics",
+    where: "Harvard OpenBio",
+    href: "/research#harvard-openbio",
+  },
+];
+
+/* ------------------------------------------------------------------ */
 /* Skills                                                              */
 /* ------------------------------------------------------------------ */
 
+/**
+ * NOT RENDERED. The Interests page used to print this as an index of tools;
+ * it now shows research interests instead.
+ *
+ * Kept because it is the faithful record of the resume's skills section, and
+ * because twelve of these appear nowhere else on the site: Java, JavaScript,
+ * TensorFlow, Scikit-learn, Graph Neural Networks, Contrastive Learning,
+ * Neural Operators, SciPy, Matplotlib, TidyVerse, Git, REST APIs. Everything
+ * else is covered by a `stack` on the entry where it was used, which is better
+ * evidence than a list. If those twelve need a home, this is the source.
+ */
 export const skills = {
   "Programming Languages": ["Python", "Java", "SQL", "R", "JavaScript"],
   "AI / ML": [

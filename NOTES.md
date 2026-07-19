@@ -248,7 +248,23 @@ the three call sites in `app/page.tsx` and it reverts to static text.
 
 ---
 
-## 9. Things I could not verify
+## 9. Tools that no longer appear anywhere
+
+The Interests page now lists research interests instead of an index of tools.
+Every tool tied to a specific piece of work still shows in that entry's stack
+line, but **twelve have no home on the site now**:
+
+Java, JavaScript, TensorFlow, Scikit-learn, Graph Neural Networks, Contrastive
+Learning, Neural Operators, SciPy, Matplotlib, TidyVerse, Git, REST APIs.
+
+They are still in `data/resume.ts` as the `skills` export, marked as unrendered.
+If any of them matter for keyword screening, say so and I will find them a home.
+My read is that a recruiter searching for "Git" is not the reader this site is
+built for, but that is your call, not mine.
+
+---
+
+## 10. Things I could not verify
 
 - **`forge-qb.com`** — I linked it as `https://forge-qb.com`. Untested.
 - **`metadataBase`** is set to `https://airjan-airlines.github.io` from your git
