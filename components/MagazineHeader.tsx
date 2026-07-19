@@ -31,7 +31,7 @@ export default function MagazineHeader() {
       // Spring, not ease-in-out. Bounce 0 — this is chrome, not a delighter.
       transition={{ type: "spring", duration: 0.4, bounce: 0 }}
     >
-      <div className="bg-base/90 backdrop-blur-[2px] pb-2 border-b border-rule flex items-baseline justify-between gap-6">
+      <div className="bg-base/95 backdrop-blur-[3px] px-2 -mx-2 pb-2 pt-1 border-b border-rule flex items-baseline justify-between gap-6">
         <div className="flex items-baseline gap-4 min-w-0">
           <Link
             href="/"

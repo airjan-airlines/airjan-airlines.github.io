@@ -223,17 +223,20 @@ does real work: it's a way through a long page, not decoration.
 
 Two departures from the literal spec, both deliberate:
 
-- **Characters are revealed, not appended.** Appending reflows the paragraph on
-  every keystroke and shifts the whole page below it. Revealing pre-rendered
-  characters costs one paint and zero layout.
+- **Nothing is split.** The first version broke the string into per-character
+  inline-block spans, which is the usual technique and caused the copy to stack
+  vertically before snapping back: once every character is its own inline-block,
+  the element's min-content width collapses to one letter, so any parent that
+  shrinks to fit (the masthead is a flex item) lays the characters out one per
+  line until fonts and flex sizing settle. The text is now a single ordinary
+  text node with a gradient mask sweeping across it, so layout is identical to
+  static text at every frame.
 - **No blinking caret**, even though that's the usual typewriter tell. A caret
   reads as a terminal, and your own `ui.md` says "no monospace anywhere, this is
   not a dev portfolio that looks like a terminal." Without it the effect reads
   as type being set, which is the actual magazine reference.
-- **Per-character on the two short display lines, per-word on the paragraph.**
-  Per-character on 250 characters of body copy takes about four seconds and
-  nobody waits. All three blocks start at the same instant, so the page sets
-  itself at once as you asked, finishing in roughly 1.2s.
+- **All three blocks sweep at once**, finishing in about 1.1s, so the page sets
+  itself simultaneously as you asked.
 - **First load only.** Gated on the cover being dismissed this session, so
   repeat visits render instantly. Reduced motion renders instantly too.
 - The server renders the **plain, complete text**; the split spans only exist
@@ -255,18 +258,15 @@ the three call sites in `app/page.tsx` and it reverts to static text.
   problems were crop problems, not photograph problems, and on a personal site
   the picture that feels like you beats the one that composes more obediently.
 
-  `scale(1.4) translateX(-9%)` moves the figure from 49% to about 36% across,
-  clear of the centre seam that was tearing through him, and makes him large
-  enough to read. `objectPosition: 50% 25%` drops him to roughly 60% of the
-  viewport height, below the masthead.
+  It runs at natural scale. I tried a 1.4x zoom to make the figure larger and
+  move him off the centre seam, which was the better composition on paper and
+  looked worse in practice: the picture is a wide scene and cropping into it
+  throws away the thing that makes it good. Reverted.
 
-  The source ships at 2800px, which keeps the 1.4x zoom oversampled up to a
-  1920px viewport. Above about 2200px wide it starts to upscale. If you have the
-  original camera file, a larger export is the cheap fix.
+  This means the figure still sits near the seam, so the split passes close to
+  him. That is a known, accepted trade: the scene beats the geometry.
 
-  Two knobs, both at the top of `Cover.tsx`: `PHOTO_TRANSFORM` for how tight the
-  crop is and where he sits horizontally, `PHOTO_POSITION` for vertical. This is
-  the part most likely to need your eye.
+  One knob at the top of `Cover.tsx`: `PHOTO_POSITION`, currently `50% 22%`.
 
 - **I did not view the rendered pages.** Build, typecheck, lint, route
   generation, and CSS output are all verified; the actual visual result is not.

@@ -60,7 +60,6 @@ export default function Home() {
             as="h1"
             text={profile.name}
             play={dismissed}
-            granularity="char"
             className="text-6xl uppercase leading-[0.85]"
           />
           <p className="label pb-1">
@@ -77,13 +76,11 @@ export default function Home() {
               as="h2"
               text={thesis}
               play={dismissed}
-              granularity="char"
-              className="text-3xl measure mb-8"
+                className="text-3xl measure mb-8"
             />
             <Typeset
               text={standfirst}
               play={dismissed}
-              granularity="word"
               className="font-body text-lg leading-relaxed measure"
             />
 

@@ -82,12 +82,16 @@ export function Reveal({
 }
 
 /**
- * A full-bleed image band, the way a feature opens a spread.
+ * A section opening on a full-bleed photograph, with the title set on it.
  *
- * Negative margins cancel the page padding so the picture runs edge to edge and
- * is trimmed by the red frame, which is the point: a photograph stopped short
- * of the margin reads as a content block, one that runs to the trim reads as
- * print.
+ * The title sits on the picture rather than above it, which is how a feature
+ * actually opens. Legibility comes from a gradient wash, not a panel behind the
+ * words: a box reads as a caption pasted onto a photograph, a wash reads as
+ * printing over one, and it only touches the end of the frame the type occupies.
+ *
+ * Negative margins cancel the page padding, horizontally so the picture runs to
+ * the trim, and vertically so it meets the running header instead of floating
+ * below it on a strip of bare paper.
  *
  * `tone` exists because not every photograph survives desaturation. Images that
  * carry their weight in structure go grayscale with the rest of the system;
@@ -117,16 +121,7 @@ export function SectionCover({
   const cream = ink === "cream";
 
   return (
-    /*
-     * The title sits on the photograph rather than above it, which is how a
-     * feature actually opens.
-     *
-     * Legibility comes from a gradient wash, not a panel behind the words. A
-     * box reads as a caption pasted onto a picture; a wash reads as printing
-     * over one, and it only touches the end of the frame the type occupies.
-     * The wash is tinted paper over dark type, or ink over light type.
-     */
-    <figure className="-mx-6 md:-mx-14 lg:-mx-20 mb-20 md:mb-28 relative">
+    <figure className="-mx-6 md:-mx-14 lg:-mx-20 -mt-28 md:-mt-36 mb-20 md:mb-28 relative">
       <div className="relative w-full aspect-[4/5] sm:aspect-[16/10] lg:aspect-[21/9] overflow-hidden bg-ink/5">
         <Image
           src={src}
@@ -159,7 +154,7 @@ export function SectionCover({
 
         <div
           className={`absolute inset-x-0 px-6 md:px-14 lg:px-20 ${
-            align === "top" ? "top-0 pt-8 md:pt-12" : "bottom-0 pb-8 md:pb-12"
+            align === "top" ? "top-0 pt-24 md:pt-32" : "bottom-0 pb-8 md:pb-12"
           }`}
         >
           <h1

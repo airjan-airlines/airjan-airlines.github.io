@@ -50,20 +50,17 @@ function Masthead() {
 }
 
 /**
- * The bridge frame, cropped rather than replaced.
+ * The bridge frame at its natural scale.
  *
- * Its two real problems were that the figure sat at 49% across, so the centre
- * split tore straight through him, and that he was too small to read. Both are
- * crop problems, not photograph problems.
+ * A 1.4x zoom put the figure larger and off the centre seam, which was
+ * technically the better composition and looked worse: the picture is a wide
+ * scene and cropping into it throws away the thing that makes it good. The
+ * scene wins over the geometry.
  *
- * `scale(1.4) translateX(-9%)` moves him to roughly 36% across, clear of the
- * seam, and makes him large enough to see. objectPosition then drops him to
- * about 60% of the viewport height, below the masthead at every width. The
- * source is 2600px wide, so a 1.4x zoom still samples more pixels than a
- * 1440px viewport needs.
+ * Biasing the crop upward keeps the sky in frame for the masthead and drops the
+ * figure into the lower middle, with the cover lines held out at the margins.
  */
-const PHOTO_POSITION = "50% 25%";
-const PHOTO_TRANSFORM = "scale(1.4) translateX(-9%)";
+const PHOTO_POSITION = "50% 22%";
 
 export default function Cover({ onOpen }: { onOpen: () => void }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -147,10 +144,7 @@ export default function Cover({ onOpen }: { onOpen: () => void }) {
                 priority
                 sizes="100vw"
                 className={photo}
-                style={{
-                  objectPosition: PHOTO_POSITION,
-                  transform: PHOTO_TRANSFORM,
-                }}
+                style={{ objectPosition: PHOTO_POSITION }}
               />
             </div>
 
@@ -203,10 +197,7 @@ export default function Cover({ onOpen }: { onOpen: () => void }) {
                 priority
                 sizes="100vw"
                 className={photo}
-                style={{
-                  objectPosition: PHOTO_POSITION,
-                  transform: PHOTO_TRANSFORM,
-                }}
+                style={{ objectPosition: PHOTO_POSITION }}
               />
             </div>
 
