@@ -9,6 +9,7 @@ import {
   Bullets,
   NextEntry,
 } from "@/components/Editorial";
+import Link from "next/link";
 import PageTurn from "@/components/PageTurn";
 import { projects, internship } from "@/data/resume";
 
@@ -86,6 +87,14 @@ export default function Engineering() {
                       >
                         Visit the site
                       </a>
+                    )}
+                    {project.writeup && (
+                      <Link
+                        href={`/engineering/${project.slug}`}
+                        className="label mt-3 block w-fit link-rule text-accent"
+                      >
+                        Read the writeup
+                      </Link>
                     )}
                   </div>
 

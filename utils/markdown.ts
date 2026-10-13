@@ -54,3 +54,42 @@ export function getAllEssays(): EssayMetadata[] {
     excerpt
   }));
 }
+
+// Project writeups live apart from essays: they are technical reports linked
+// from the Engineering page, not entries in Writing.
+const writeupsDirectory = path.join(process.cwd(), 'content/projects');
+
+export interface Writeup {
+  slug: string;
+  title: string;
+  date: string;
+  excerpt: string;
+  link?: string;
+  stack: string[];
+  content: string;
+}
+
+export function getWriteupSlugs(): string[] {
+  if (!fs.existsSync(writeupsDirectory)) return [];
+  return fs
+    .readdirSync(writeupsDirectory)
+    .filter((file) => file.endsWith('.md'))
+    .map((file) => file.replace(/\.md$/, ''));
+}
+
+export function getWriteupBySlug(slug: string): Writeup | null {
+  const fullPath = path.join(writeupsDirectory, `${slug}.md`);
+  if (!fs.existsSync(fullPath)) return null;
+
+  const { data, content } = matter(fs.readFileSync(fullPath, 'utf8'));
+
+  return {
+    slug,
+    title: data.title || slug,
+    date: data.date || "",
+    excerpt: data.excerpt || "",
+    link: data.link,
+    stack: data.stack || [],
+    content,
+  };
+}

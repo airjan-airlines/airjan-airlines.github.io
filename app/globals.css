@@ -163,6 +163,30 @@
     content: none;
   }
 
+  /*
+   * Project writeups. Display equations and tables can outgrow a phone, so
+   * they scroll inside their own box rather than widening the page.
+   */
+  /* Section headings here run long; balance splits them into two equal
+     halves, which reads as a broken line. Fill the first line instead. */
+  .writeup-body :is(h2, h3) {
+    text-wrap: pretty;
+  }
+  .writeup-body .katex-display {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0.25em 0;
+  }
+  .writeup-body table {
+    display: block;
+    overflow-x: auto;
+  }
+  .writeup-body :not(pre) > code {
+    background: var(--color-base-tint);
+    padding: 0.1em 0.35em;
+    font-size: 0.85em;
+  }
+
   /* Metadata label: tracked uppercase sans, used for dates and sections. */
   .label {
     font-family: var(--font-sans);
