@@ -41,6 +41,8 @@ export interface Project {
   stats?: { value: string; label: string }[];
   stack: string[];
   link?: string;
+  /** True when content/projects/<slug>.md exists; links to /engineering/<slug>. */
+  writeup?: boolean;
 }
 
 export interface ArchiveEntry {
@@ -193,6 +195,7 @@ export const projects: Project[] = [
     duration: "Feb. 2025 - Present",
     order: 100,
     link: "https://forge-qb.com",
+    writeup: true,
     deck: "A study tool that figures out what you are bad at, then keeps asking about it.",
     bullets: [
       "Founder. Led a team of 4 developers nationwide to build an adaptive-learning quizbowl study app, reaching 500 downloads and 24k+ post views.",
